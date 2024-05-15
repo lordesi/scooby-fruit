@@ -57,20 +57,20 @@ def schermata_menu():
                 if settings.PLAY_RECT.collidepoint(posizione):
                     run=False
 
-def schermata_gameplay():
-    run = True
-    while run:
-        screen.blit(settings.SCHERMATA_GAMEPLAY, (0,0))
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-        pass
-    pass
+# def schermata_gameplay():
+#     run = True
+#     while run:
+#         screen.blit(settings.SCHERMATA_GAMEPLAY, (0,0))
+#         for event in pygame.event.get():
+#             if event.type == pygame.QUIT:
+#                 run = False
+#         pass
+#     pass
 
 
 schermata_caricamento()
 schermata_menu()
-schermata_gameplay()
+#schermata_gameplay()
 
 
 pygame.quit()

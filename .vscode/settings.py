@@ -27,7 +27,7 @@ SCHERMATA_MENU=pygame.transform.scale(SCHERMATA_MENU,(WINDOW_WIDTH,WINDOW_HEIGHT
 
 barra = []
 for percentuale in [25,50,75,100]:
-    frame = pygame.image.load(f"{percentuale}.jpeg")
+    frame = pygame.image.load(f"barra-caricamento\{percentuale}.jpeg")
     frame = pygame.transform.scale(frame, (500, 40))
     barra.append(frame)
 
@@ -50,5 +50,5 @@ PLAY_RECT_PRESSED = pygame.Rect(WINDOW_WIDTH/2 - 64, WINDOW_HEIGHT/2+91 - 25, 12
 
 #definisco schermata gameplay -demo
 
-SCHERMATA_GAMEPLAY = pygame.image.load("schermata.gameplay.jpg")
+SCHERMATA_GAMEPLAY = pygame.image.load("schermata-gameplay.jpg")
 SCHERMATA_GAMEPLAY = pygame.transform.scale(SCHERMATA_GAMEPLAY, (WINDOW_WIDTH, WINDOW_HEIGHT))
