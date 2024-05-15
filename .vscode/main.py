@@ -51,19 +51,18 @@ def schermata_caricamento():
 
 #Rect e immagine per schermata iniziale
 play_rect = pygame.Rect(settings.WINDOW_WIDTH/2 - 55, settings.WINDOW_HEIGHT/2+100 - 25, 110, 110)
-play_rect_schiacciato = pygame.Rect(settings.WINDOW_WIDTH/2 - 64, settings.WINDOW_HEIGHT/2+100 - 25, 128, 128)
-pulsante_gioca=pygame.image.load("anguria pulsante.jpg")
+play_rect_schiacciato = pygame.Rect(settings.WINDOW_WIDTH/2 - 64, settings.WINDOW_HEIGHT/2+91 - 25, 128, 128)
+pulsante_gioca=pygame.image.load("play - button.png")
 pulsante_gioca=pygame.transform.scale(pulsante_gioca,(110,110))
 pulsante_gioca_cliccato=pygame.transform.scale(pulsante_gioca,(128,128))
+sfondo_iniziale=pygame.image.load("sfondo prova.jpeg")
+sfondo_iniziale=pygame.transform.scale(sfondo_iniziale,(settings.WINDOW_WIDTH,settings.WINDOW_HEIGHT))
 
 #funzione schermata iniziale
 def schermata_iniziale():
     inizio=True
     while inizio:
-        screen.fill(bianco)
-        font=pygame.font.SysFont('arial',40)
-        titolo=font.render('Scooby fruit',True,(0,100,0))
-        screen.blit(titolo, (settings.WINDOW_WIDTH/2 - titolo.get_width()/2, settings.WINDOW_HEIGHT/4 - titolo.get_height()/2))
+        screen.blit(sfondo_iniziale,(0,0))
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
