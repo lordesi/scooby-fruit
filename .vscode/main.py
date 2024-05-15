@@ -30,14 +30,14 @@ def schermata_caricamento():
 
 #funzione schermata iniziale
 
-def schermata_iniziale():
-    inizio=True
-    while inizio:
+def schermata_menu():
+    run=True
+    while run:
         screen.blit(settings.SCHERMATA_MENU,(0,0))
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                inizio = False
+                run = False
 
             if event.type==pygame.MOUSEMOTION:
                 posizione=pygame.mouse.get_pos()
@@ -55,11 +55,22 @@ def schermata_iniziale():
             if event.type==pygame.MOUSEBUTTONDOWN:
                 posizione=pygame.mouse.get_pos()
                 if settings.PLAY_RECT.collidepoint(posizione):
-                    inizio=False
-        
+                    run=False
+
+def schermata_gameplay():
+    run = True
+    while run:
+        screen.blit(settings.SCHERMATA_GAMEPLAY, (0,0))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+        pass
+    pass
+
 
 schermata_caricamento()
-schermata_iniziale()
+schermata_menu()
+schermata_gameplay()
 
 
 pygame.quit()

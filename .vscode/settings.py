@@ -47,3 +47,8 @@ PLAY_BUTTON = pygame.transform.scale(PLAY_BUTTON,(128,128))
 
 PLAY_RECT = pygame.Rect(WINDOW_WIDTH/2 - 55, WINDOW_HEIGHT/2+100 - 25, 110, 110)
 PLAY_RECT_PRESSED = pygame.Rect(WINDOW_WIDTH/2 - 64, WINDOW_HEIGHT/2+91 - 25, 128, 128)
+
+#definisco schermata gameplay -demo
+
+SCHERMATA_GAMEPLAY = pygame.image.load("schermata.gameplay.jpg")
+SCHERMATA_GAMEPLAY = pygame.transform.scale(SCHERMATA_GAMEPLAY, (WINDOW_WIDTH, WINDOW_HEIGHT))
