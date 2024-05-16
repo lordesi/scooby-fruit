@@ -26,8 +26,8 @@ SCHERMATA_MENU=pygame.transform.scale(SCHERMATA_MENU,(WINDOW_WIDTH,WINDOW_HEIGHT
 #definisco lista barra di caricamento -demo
 
 barra = []
-for percentuale in [25,50,75,100]:
-    frame = pygame.image.load(f"barra-caricamento\{percentuale}.jpeg")
+for percentuale in [25,50,75]:
+    frame = pygame.image.load(f"barra-caricamento\{percentuale}.png")
     frame = pygame.transform.scale(frame, (500, 40))
     barra.append(frame)
 
