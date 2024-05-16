@@ -21,7 +21,7 @@ def schermata_caricamento():
     i=0
     while stato:
         screen.blit(settings.SCHERMATA_CARICAMENTO,(0,0))
-        screen.blit(settings.barra[i],(250,500))
+        screen.blit(settings.barra[i],(250,400))
         pygame.display.flip()
         pygame.time.delay(1200)
         i+=1
@@ -55,22 +55,22 @@ def schermata_menu():
             if event.type==pygame.MOUSEBUTTONDOWN:
                 posizione=pygame.mouse.get_pos()
                 if settings.PLAY_RECT.collidepoint(posizione):
-                    run=False
+                    schermata_gameplay()
 
-# def schermata_gameplay():
-#     run = True
-#     while run:
-#         screen.blit(settings.SCHERMATA_GAMEPLAY, (0,0))
-#         for event in pygame.event.get():
-#             if event.type == pygame.QUIT:
-#                 run = False
-#         pass
-#     pass
+def schermata_gameplay():
+    run = True
+    while run:
+        screen.blit(settings.SCHERMATA_GAMEPLAY, (0,0))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+        pass
+    pass
 
 
 schermata_caricamento()
 schermata_menu()
-#schermata_gameplay()
+
 
 
 pygame.quit()
