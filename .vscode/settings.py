@@ -30,11 +30,13 @@ SCHERMATA_CARICAMENTO = pygame.transform.scale(SCHERMATA_CARICAMENTO,(WINDOW_WID
 SCHERMATA_MENU = pygame.image.load("schermata-menu.png")
 SCHERMATA_MENU=pygame.transform.scale(SCHERMATA_MENU,(WINDOW_WIDTH,WINDOW_HEIGHT))
 
+
+
 #definisco lista barra di caricamento -demo
 
 barra = []
 for percentuale in [25,50,75]:
-    frame = pygame.image.load(f"barra-caricamento\{percentuale}.png")
+    frame = pygame.image.load(f"barra-caricamento/{percentuale}.png")
     frame = pygame.transform.scale(frame, (frame.get_width() * 0.4, frame.get_height() * 0.4))
     barra.append(frame)
 
@@ -65,6 +67,17 @@ SCHERMATA_GAMEPLAY = pygame.transform.scale(SCHERMATA_GAMEPLAY, (WINDOW_WIDTH, W
 KATANA = pygame.image.load("katana.png").convert_alpha()
 KATANA = pygame.transform.scale(KATANA, (KATANA.get_width() * 0.2, KATANA.get_height() * 0.2))
 KATANA_RECT = KATANA.get_rect()
+
+#definisco trofeo
+#TROFEO_RECT=pygame.Rect(WINDOW_WIDTH-70, 70 , 50, 50)
+TROFEO_RECT=pygame.Rect(WINDOW_WIDTH-100, WINDOW_HEIGHT-565 , 65, 65)
+TROFEO = pygame.image.load("trofeo.png")
+#TROFEO=pygame.transform.scale(TROFEO,(50,50))
+
+STATS_RECT=pygame.Rect(WINDOW_WIDTH-500,WINDOW_HEIGHT-450,500,300)
+NERO_STATS=pygame.image.load("nero.png")
+X_RECT=pygame.Rect(730,150,20,20)
+X_IMMAGINE=pygame.image.load("x.png")
 
 #definisco velocità e misure frutta -demo
 

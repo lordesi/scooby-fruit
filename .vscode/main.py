@@ -55,6 +55,7 @@ def schermata_menu():
     run=True
     while run:
         screen.blit(settings.SCHERMATA_MENU,(0,0))
+        
 
         pos = pygame.mouse.get_pos()
 
@@ -65,16 +66,45 @@ def schermata_menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if settings.PLAY_RECT.collidepoint(pos):
                     schermata_gameplay()
+                if settings.TROFEO_RECT.collidepoint(pos):
+                    screen.blit(pygame.transform.scale(settings.NERO_STATS, (500, 300)), (250,150))
+                    screen.blit(pygame.transform.scale(settings.X_IMMAGINE, (20, 20)), (730,150))
+                    screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
+                    pygame.display.update()
+                    stats=True
+                    while stats:
+                        for event in pygame.event.get():
+                            if event.type==pygame.QUIT:
+                                run = False
+                                stats=False
+                            elif event.type==pygame.MOUSEBUTTONDOWN:
+                                pos = pygame.mouse.get_pos()
+                                if settings.X_RECT.collidepoint(pos):
+                                    stats=False
+                        screen.blit(settings.SCHERMATA_MENU, (0, 0))
+                        screen.blit(pygame.transform.scale(settings.NERO_STATS, (500, 300)), (250, 150))
+                        screen.blit(pygame.transform.scale(settings.X_IMMAGINE, (20, 20)), (730, 150))
+                        pos = pygame.mouse.get_pos()
+                        screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
+                        pygame.display.update()          
+                        
+                        
+        
 
         if settings.PLAY_RECT.collidepoint(pos):
             screen.blit(pygame.transform.scale(settings.PLAY_BUTTON, (128, 128)), settings.PLAY_RECT_PRESSED.topleft)
         else:
             screen.blit(pygame.transform.scale(settings.PLAY_BUTTON, (110, 110)), settings.PLAY_RECT.topleft)
-
+        if settings.TROFEO_RECT.collidepoint(pos):
+            screen.blit(pygame.transform.scale(settings.TROFEO, (65, 65)), (900,35))
+        else:
+            screen.blit(pygame.transform.scale(settings.TROFEO, (50, 50)), (907,45))
+        
         screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
-
+        
         pygame.display.update()
         clock.tick(settings.FPS)
+
 def schermata_gameplay():
     run = True
     x = random.randint(0, settings.WINDOW_WIDTH - fruit_images["kiwi"].rect.width)
