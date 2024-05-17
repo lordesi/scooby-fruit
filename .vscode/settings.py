@@ -1,10 +1,16 @@
 import pygame
+pygame.init()
 
 #definisco parametri base - demo
 
 WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 600
 FPS = 60
+
+
+#definisco display -demo
+
+screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 #definisco colori - demo
 
@@ -28,7 +34,6 @@ SCHERMATA_MENU=pygame.transform.scale(SCHERMATA_MENU,(WINDOW_WIDTH,WINDOW_HEIGHT
 barra = []
 for percentuale in [25,50,75]:
     frame = pygame.image.load(f"barra-caricamento\{percentuale}.png")
-    print(frame.get_width(), frame.get_height())
     frame = pygame.transform.scale(frame, (frame.get_width() * 0.4, frame.get_height() * 0.4))
     barra.append(frame)
 
@@ -40,9 +45,9 @@ TOTAL_FRAMES = len(barra)
 
 #definisco pulsante -demo
 
-PLAY_BUTTON = pygame.image.load("play - button.png")
+PLAY_BUTTON = pygame.image.load("play - button.png").convert_alpha()
 PLAY_BUTTON = pygame.transform.scale(PLAY_BUTTON,(110,110))
-PLAY_BUTTON = pygame.transform.scale(PLAY_BUTTON,(128,128))
+
 
 #definisco rect button -demo
 
@@ -53,3 +58,11 @@ PLAY_RECT_PRESSED = pygame.Rect(WINDOW_WIDTH/2 - 64, WINDOW_HEIGHT/2+91 - 25, 12
 
 SCHERMATA_GAMEPLAY = pygame.image.load("schermata-gameplay.jpg")
 SCHERMATA_GAMEPLAY = pygame.transform.scale(SCHERMATA_GAMEPLAY, (WINDOW_WIDTH, WINDOW_HEIGHT))
+
+#definisco katana -demo
+
+KATANA = pygame.image.load("katana.png").convert_alpha()
+KATANA = pygame.transform.scale(KATANA, (KATANA.get_width() * 0.2, KATANA.get_height() * 0.2))
+KATANA_RECT = KATANA.get_rect()
+
+

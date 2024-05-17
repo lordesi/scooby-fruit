@@ -1,5 +1,5 @@
 import pygame, sys
-import fruit
+from fruit import Fruit
 import settings
 
 
@@ -14,6 +14,7 @@ pygame.display.set_caption("Scooby Fruit")
 #definisco la base per il framerate
 
 clock = pygame.time.Clock()
+
 
 
 def schermata_caricamento():
@@ -34,29 +35,26 @@ def schermata_menu():
     run=True
     while run:
         screen.blit(settings.SCHERMATA_MENU,(0,0))
+
+        pos = pygame.mouse.get_pos()
+
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-
-            if event.type==pygame.MOUSEMOTION:
-                posizione=pygame.mouse.get_pos()
-                if settings.PLAY_RECT.collidepoint(posizione):
-                    screen.blit(settings.PLAY_BUTTON,settings.PLAY_RECT_PRESSED)
-                    settings.PLAY_BUTTON=pygame.transform.scale(settings.PLAY_BUTTON,(128,128))
-                    pygame.display.update()
-            
-            if event.type==pygame.MOUSEMOTION:
-                posizione=pygame.mouse.get_pos()
-                if not settings.PLAY_RECT.collidepoint(posizione):
-                    screen.blit(settings.PLAY_BUTTON,settings.PLAY_RECT)
-                    pygame.display.update()
-            
-            if event.type==pygame.MOUSEBUTTONDOWN:
-                posizione=pygame.mouse.get_pos()
-                if settings.PLAY_RECT.collidepoint(posizione):
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if settings.PLAY_RECT.collidepoint(pos):
                     schermata_gameplay()
 
+        if settings.PLAY_RECT.collidepoint(pos):
+            screen.blit(pygame.transform.scale(settings.PLAY_BUTTON, (128, 128)), settings.PLAY_RECT_PRESSED.topleft)
+        else:
+            screen.blit(pygame.transform.scale(settings.PLAY_BUTTON, (110, 110)), settings.PLAY_RECT.topleft)
+
+        screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
+
+        pygame.display.update()
+        clock.tick(settings.FPS)
 def schermata_gameplay():
     run = True
     while run:
@@ -64,11 +62,11 @@ def schermata_gameplay():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-        pass
-    pass
-
+        pygame.display.update() 
+        clock.tick(settings.FPS)
 
 schermata_caricamento()
+pygame.mouse.set_visible(False)
 schermata_menu()
 
 
