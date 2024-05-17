@@ -1,4 +1,5 @@
 import pygame
+import random
 pygame.init()
 
 #definisco parametri base - demo
@@ -65,4 +66,8 @@ KATANA = pygame.image.load("katana.png").convert_alpha()
 KATANA = pygame.transform.scale(KATANA, (KATANA.get_width() * 0.2, KATANA.get_height() * 0.2))
 KATANA_RECT = KATANA.get_rect()
 
+#definisco velocità e misure frutta -demo
+
+RADIUS = 20
+GRAVITY = 0.05
 
