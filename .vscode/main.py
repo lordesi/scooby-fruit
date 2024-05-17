@@ -1,8 +1,12 @@
 import pygame, sys
 from fruit import Fruit
+from bomb import Bomb
+from settings import fruit_images
+from settings import bomb_images
 import settings
 import random
 import math
+
 
 
 
@@ -17,23 +21,8 @@ pygame.display.set_caption("Scooby Fruit")
 
 clock = pygame.time.Clock()
 
-fruit_images = {
-
-    "kiwi" : Fruit("Scooby Game Graphics\Fruits\Kiwi_Fruit.png"),
-    "lemon" : Fruit("Scooby Game Graphics\Fruits\Lemon.png"),
-    "lime" : Fruit("Scooby Game Graphics\Fruits\Lime.png"),
-    "mango" : Fruit("Scooby Game Graphics\Fruits\Mango.png"),
-    "orange" : Fruit("Scooby Game Graphics\Fruits\Orange.png"),
-    "passion_fruit" : Fruit("Scooby Game Graphics\Fruits\Passionfruit.png"),
-    "peach" : Fruit("Scooby Game Graphics\Fruits\Peach.png"),
-    "pear" : Fruit("Scooby Game Graphics\Fruits\Pear.png"),
-    "pineapple" : Fruit("Scooby Game Graphics\Fruits\Pineapple.png"),
-    "plum" : Fruit("Scooby Game Graphics\Fruits\Plum.png"),
-    "red_apple" : Fruit("Scooby Game Graphics\Fruits\Red_Apple.png"),
-    "strawberry" : Fruit("Scooby Game Graphics\Fruits\Strawberry.png"),
-    "tomato" : Fruit("Scooby Game Graphics\Fruits\Tomato.png"),
-    "watermelon" : Fruit("Scooby Game Graphics\Fruits\Watermelon.png")
-
+bomb_images = {
+    "bomb" : Bomb("Scooby Game Graphics\Fruits\bomb.png")
 }
 
 
@@ -88,9 +77,6 @@ def schermata_menu():
                         screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
                         pygame.display.update()          
                         
-                        
-        
-
         if settings.PLAY_RECT.collidepoint(pos):
             screen.blit(pygame.transform.scale(settings.PLAY_BUTTON, (128, 128)), settings.PLAY_RECT_PRESSED.topleft)
         else:
@@ -113,6 +99,7 @@ def schermata_gameplay():
     speed_y = -random.uniform(2,3)
     while run:
         screen.blit(settings.SCHERMATA_GAMEPLAY, (0,0))
+        pos = pygame.mouse.get_pos()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -131,7 +118,8 @@ def schermata_gameplay():
             speed_y = -random.uniform(2,3)
         
         fruit_images["kiwi"].blit_fruit(screen, x, y)
-
+        bomb_images["bomb"].blit_bomb(screen, x, y)
+        screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
         if y > settings.WINDOW_HEIGHT:
             run = False
         

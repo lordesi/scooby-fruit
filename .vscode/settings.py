@@ -1,5 +1,7 @@
 import pygame
 import random
+from fruit import Fruit
+from bomb import Bomb
 pygame.init()
 
 #definisco parametri base - demo
@@ -83,4 +85,30 @@ X_IMMAGINE=pygame.image.load("x.png")
 
 RADIUS = 20
 GRAVITY = 0.05
+
+#definisco fruit e bomba
+
+fruit_images = {
+
+    "kiwi" : Fruit("Scooby Game Graphics\Fruits\Kiwi_Fruit.png"),
+    "lemon" : Fruit("Scooby Game Graphics\Fruits\Lemon.png"),
+    "lime" : Fruit("Scooby Game Graphics\Fruits\Lime.png"),
+    "mango" : Fruit("Scooby Game Graphics\Fruits\Mango.png"),
+    "orange" : Fruit("Scooby Game Graphics\Fruits\Orange.png"),
+    "passion_fruit" : Fruit("Scooby Game Graphics\Fruits\Passionfruit.png"),
+    "peach" : Fruit("Scooby Game Graphics\Fruits\Peach.png"),
+    "pear" : Fruit("Scooby Game Graphics\Fruits\Pear.png"),
+    "pineapple" : Fruit("Scooby Game Graphics\Fruits\Pineapple.png"),
+    "plum" : Fruit("Scooby Game Graphics\Fruits\Plum.png"),
+    "red_apple" : Fruit("Scooby Game Graphics\Fruits\Red_Apple.png"),
+    "strawberry" : Fruit("Scooby Game Graphics\Fruits\Strawberry.png"),
+    "tomato" : Fruit("Scooby Game Graphics\Fruits\Tomato.png"),
+    "watermelon" : Fruit("Scooby Game Graphics\Fruits\Watermelon.png")
+
+}
+
+bomb_images = {
+    "bomb" : Bomb("Scooby Game Graphics\Fruits\bomb.png")
+}
+
 
