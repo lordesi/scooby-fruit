@@ -37,12 +37,12 @@ SCHERMATA_MENU=pygame.transform.scale(SCHERMATA_MENU,(WINDOW_WIDTH,WINDOW_HEIGHT
 barra = []
 for percentuale in [25,50,75]:
     frame = pygame.image.load(f"barra-caricamento/{percentuale}.png")
-    frame = pygame.transform.scale(frame, (frame.get_width() * 0.4, frame.get_height() * 0.4))
+    frame = pygame.transform.scale(frame, (450, 150))
     barra.append(frame)
 
 #definisco costanti barra -demo
 
-POSIZIONE_BARRA = (250, 500)
+POSIZIONE_BARRA = (200, 450)
 DELAY = 1200
 TOTAL_FRAMES = len(barra)
 
