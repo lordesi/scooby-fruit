@@ -9,6 +9,9 @@ pygame.init()
 WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 600
 FPS = 60
+TRAIL_LIFETIME = 10000
+RADIUS_TRAIL = 10
+
 
 
 #definisco display -demo
@@ -70,6 +73,11 @@ KATANA = pygame.image.load("katana.png").convert_alpha()
 KATANA = pygame.transform.scale(KATANA, (KATANA.get_width() * 0.2, KATANA.get_height() * 0.2))
 KATANA_RECT = KATANA.get_rect()
 
+#definisco scia taglio -demo
+
+SCIA = pygame.image.load("scia.png").convert_alpha()
+SCIA_RECT = SCIA.get_rect()
+
 #definisco trofeo
 #TROFEO_RECT=pygame.Rect(WINDOW_WIDTH-70, 70 , 50, 50)
 TROFEO_RECT=pygame.Rect(WINDOW_WIDTH-100, WINDOW_HEIGHT-565 , 65, 65)
@@ -108,7 +116,7 @@ fruit_images = {
 }
 
 bomb_images = {
-    "bomb" : Bomb("Scooby Game Graphics\Fruits\bomb.png")
+    "bomb" : Bomb("Scooby Game Graphics\Fruits\\bomb.png")
 }
 
 

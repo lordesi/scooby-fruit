@@ -10,6 +10,8 @@ import math
 
 
 
+
+
 pygame.init()
 
 #definisco la schermata di avvio - demo
@@ -20,26 +22,6 @@ pygame.display.set_caption("Scooby Fruit")
 #definisco la base per il framerate
 
 clock = pygame.time.Clock()
-
-fruit_images = {
-
-    "kiwi" : Fruit("Scooby Game Graphics\Fruits\Kiwi_Fruit.png"),
-    "lemon" : Fruit("Scooby Game Graphics\Fruits\Lemon.png"),
-    "lime" : Fruit("Scooby Game Graphics\Fruits\Lime.png"),
-    "mango" : Fruit("Scooby Game Graphics\Fruits\Mango.png"),
-    "orange" : Fruit("Scooby Game Graphics\Fruits\Orange.png"),
-    "passion_fruit" : Fruit("Scooby Game Graphics\Fruits\Passionfruit.png"),
-    "peach" : Fruit("Scooby Game Graphics\Fruits\Peach.png"),
-    "pear" : Fruit("Scooby Game Graphics\Fruits\Pear.png"),
-    "pineapple" : Fruit("Scooby Game Graphics\Fruits\Pineapple.png"),
-    "plum" : Fruit("Scooby Game Graphics\Fruits\Plum.png"),
-    "red_apple" : Fruit("Scooby Game Graphics\Fruits\Red_Apple.png"),
-    "strawberry" : Fruit("Scooby Game Graphics\Fruits\Strawberry.png"),
-    "tomato" : Fruit("Scooby Game Graphics\Fruits\Tomato.png"),
-    "watermelon" : Fruit("Scooby Game Graphics\Fruits\Watermelon.png")
-
-}
-
 
 def schermata_caricamento():
     stato=True
@@ -52,6 +34,37 @@ def schermata_caricamento():
         i+=1
         if i==settings.TOTAL_FRAMES:
             stato=False
+
+
+#definisco funzione spawn -demo
+
+def spawn_fruit():
+    fruit_name = random.choice(list(fruit_images.keys()))
+    fruit_image = fruit_images[fruit_name]
+    x = random.randint(0, settings.WINDOW_WIDTH - fruit_image.rect.width)
+    y = settings.WINDOW_HEIGHT - fruit_image.rect.height
+    speed_x = random.uniform(-1.5, 1.5)
+    speed_y = -random.uniform(2,3)
+    return [x, y, speed_x, speed_y, fruit_image]
+
+
+#definisco funzione movimento -demo
+
+def move(x, y, speed_x, speed_y, fruit_image, screen):
+    x += speed_x
+    y += speed_y
+    if y < settings.WINDOW_HEIGHT / 2:
+            speed_y += settings.GRAVITY
+    if x < -settings.RADIUS:
+            x = settings.WINDOW_WIDTH + settings.RADIUS
+            speed_x = random.uniform(-1.5, 1.5)
+            speed_y = -random.uniform(2,3)
+    elif x > settings.WINDOW_WIDTH + settings.RADIUS:
+            x = -settings.RADIUS
+            speed_x = random.uniform(-1.5, 1.5)
+            speed_y = -random.uniform(2,3)
+    fruit_image.blit_fruit(screen, x, y)
+    return x, y, speed_x, speed_y
 
 #funzione schermata iniziale
 
@@ -108,35 +121,33 @@ def schermata_menu():
 
 def schermata_gameplay():
     run = True
-    x = random.randint(0, settings.WINDOW_WIDTH - fruit_images["kiwi"].rect.width)
-    y = settings.WINDOW_HEIGHT - fruit_images["kiwi"].rect.height
-    speed_x = random.uniform(-1.5, 1.5)
-    speed_y = -random.uniform(2,3)
+    fruits = []
+    spawn_timer = 0
+    spawn_delay = 60
+
+
     while run:
         screen.blit(settings.SCHERMATA_GAMEPLAY, (0,0))
         pos = pygame.mouse.get_pos()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+        spawn_timer += 1
+        if spawn_timer >= spawn_delay:
+            spawn_timer = 0
+            fruits.append(spawn_fruit())
         
-        x += speed_x
-        y += speed_y
-        if y < settings.WINDOW_HEIGHT / 2:
-            speed_y += settings.GRAVITY
-        if x < -settings.RADIUS:
-            x = settings.WINDOW_WIDTH + settings.RADIUS
-            speed_x = random.uniform(-1.5, 1.5)
-            speed_y = -random.uniform(2,3)
-        elif x > settings.WINDOW_WIDTH + settings.RADIUS:
-            x = -settings.RADIUS
-            speed_x = random.uniform(-1.5, 1.5)
-            speed_y = -random.uniform(2,3)
+        for i in range(len(fruits)):
+            fruit_data = fruits[i]
+            x, y, speed_x, speed_y, fruit_image = fruit_data
+            x, y, speed_x, speed_y = move(x, y, speed_x, speed_y, fruit_image, screen)
+            fruits[i] = [x, y, speed_x, speed_y, fruit_image]
         
-        fruit_images["kiwi"].blit_fruit(screen, x, y)
-        bomb_images["bomb"].blit_bomb(screen, x, y)
+
+        
+        
+
         screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
-        if y > settings.WINDOW_HEIGHT:
-            run = False
         
         pygame.display.update() 
         clock.tick(settings.FPS)
@@ -149,3 +160,4 @@ schermata_menu()
 
 pygame.quit()
 sys.exit()
+ 
