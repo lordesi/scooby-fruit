@@ -35,7 +35,65 @@ SCHERMATA_CARICAMENTO = pygame.transform.scale(SCHERMATA_CARICAMENTO,(WINDOW_WID
 SCHERMATA_MENU = pygame.image.load("schermata-menu.png")
 SCHERMATA_MENU=pygame.transform.scale(SCHERMATA_MENU,(WINDOW_WIDTH,WINDOW_HEIGHT))
 
+#definisco funzioni spawn frutti e bombe
+def spawn_fruit():
+    fruit_name = random.choice(list(fruit_images.keys()))
+    fruit_image = fruit_images[fruit_name]
+    x = random.randint(0, WINDOW_WIDTH - fruit_image.rect.width)
+    y = WINDOW_HEIGHT 
+    speed_x = random.uniform(-1.5, 1.5)
+    speed_y = -random.uniform(2,3)
+    fruit_image.rect.topleft=(x,y)
+    return [x, y, speed_x, speed_y, fruit_image]
+def spawn_bomba():
+    bomba_image=bomb_images["bomb"]
+    x=random.randint(0,WINDOW_WIDTH - bomba_image.rect.width)
+    y=WINDOW_HEIGHT
+    speed_x=random.uniform(-1.5,1.5)
+    speed_y=random.uniform(2,3)
+    bomba_rect=pygame.Rect(x,y,bomba_image.rect.width,bomba_image.rect.height)
+    return [x, y, speed_x, speed_y, bomba_image,bomba_rect]
 
+def move(x, y, speed_x, speed_y, fruit_image, screen):
+    x += speed_x
+    y += speed_y
+    if y < WINDOW_HEIGHT / 2:
+            speed_y += GRAVITY
+    if x < -RADIUS:
+            x = WINDOW_WIDTH + RADIUS
+            speed_x = random.uniform(-1.5, 1.5)
+            speed_y = -random.uniform(2,3)
+    elif x > WINDOW_WIDTH + RADIUS:
+            x = -RADIUS
+            speed_x = random.uniform(-1.5, 1.5)
+            speed_y = -random.uniform(2,3)
+    fruit_image.rect.topleft=(x,y)
+    fruit_image.blit_fruit(screen, x, y)
+    return x, y, speed_x, speed_y
+
+def move_bomb(x, y, speed_x, speed_y, bomba_image, screen,rect):
+    x += speed_x
+    y += speed_y
+    if y < WINDOW_HEIGHT / 2:
+            speed_y += GRAVITY
+    if x < -RADIUS:
+            x = WINDOW_WIDTH + RADIUS
+            speed_x = random.uniform(-1.5, 1.5)
+            speed_y = -random.uniform(2,3)
+    elif x > WINDOW_WIDTH + RADIUS:
+            x = -RADIUS
+            speed_x = random.uniform(-1.5, 1.5)
+            speed_y = -random.uniform(2,3)
+    rect=pygame.Rect(x,y,bomba_image.rect.width,bomba_image.rect.height)
+    bomba_image.blit_bomb(screen, x, y)
+    return x, y, speed_x, speed_y, rect
+
+#definisco funzione per ottenere frutti tagliati
+def numfrutti():
+      with open("progressi.txt","r",encoding="utf-8") as f:
+            dati=f.read()
+            
+            return dati
 
 #definisco lista barra di caricamento -demo
 
@@ -98,25 +156,33 @@ GRAVITY = 0.05
 
 fruit_images = {
 
-    "kiwi" : Fruit("Scooby Game Graphics\Fruits\Kiwi_Fruit.png"),
-    "lemon" : Fruit("Scooby Game Graphics\Fruits\Lemon.png"),
-    "lime" : Fruit("Scooby Game Graphics\Fruits\Lime.png"),
-    "mango" : Fruit("Scooby Game Graphics\Fruits\Mango.png"),
-    "orange" : Fruit("Scooby Game Graphics\Fruits\Orange.png"),
-    "passion_fruit" : Fruit("Scooby Game Graphics\Fruits\Passionfruit.png"),
-    "peach" : Fruit("Scooby Game Graphics\Fruits\Peach.png"),
-    "pear" : Fruit("Scooby Game Graphics\Fruits\Pear.png"),
-    "pineapple" : Fruit("Scooby Game Graphics\Fruits\Pineapple.png"),
-    "plum" : Fruit("Scooby Game Graphics\Fruits\Plum.png"),
-    "red_apple" : Fruit("Scooby Game Graphics\Fruits\Red_Apple.png"),
-    "strawberry" : Fruit("Scooby Game Graphics\Fruits\Strawberry.png"),
-    "tomato" : Fruit("Scooby Game Graphics\Fruits\Tomato.png"),
-    "watermelon" : Fruit("Scooby Game Graphics\Fruits\Watermelon.png")
+    "kiwi" : Fruit("Scooby Game Graphics/Fruits/Kiwi_Fruit.png"),
+    "lemon" : Fruit("Scooby Game Graphics/Fruits/Lemon.png"),
+    "lime" : Fruit("Scooby Game Graphics/Fruits/Lime.png"),
+    "mango" : Fruit("Scooby Game Graphics/Fruits/Mango.png"),
+    "orange" : Fruit("Scooby Game Graphics/Fruits/Orange.png"),
+    "passion_fruit" : Fruit("Scooby Game Graphics/Fruits/Passionfruit.png"),
+    "peach" : Fruit("Scooby Game Graphics/Fruits/Peach.png"),
+    "pear" : Fruit("Scooby Game Graphics/Fruits/Pear.png"),
+    "pineapple" : Fruit("Scooby Game Graphics/Fruits/Pineapple.png"),
+    "plum" : Fruit("Scooby Game Graphics/Fruits/Plum.png"),
+    "red_apple" : Fruit("Scooby Game Graphics/Fruits/Red_Apple.png"),
+    "strawberry" : Fruit("Scooby Game Graphics/Fruits/Strawberry.png"),
+    "tomato" : Fruit("Scooby Game Graphics/Fruits/Tomato.png"),
+    "watermelon" : Fruit("Scooby Game Graphics/Fruits/Watermelon.png")
 
 }
 
 bomb_images = {
-    "bomb" : Bomb("Scooby Game Graphics\Fruits\\bomb.png")
+    "bomb" : Bomb("Scooby Game Graphics/Fruits/bomb.png")
 }
 
+#definisco cuore -demo
 
+CUORE = pygame.image.load("Scooby Game Graphics/Fruits/cuore rosso.png")
+CUORE = pygame.transform.scale(CUORE, (CUORE.get_width()* 0.5, CUORE.get_height()*0.5))
+CUORE_RECT = CUORE.get_rect()
+
+#Game over
+GAME_OVER = pygame.image.load("game_over.jpg")
+GAME_OVER = pygame.transform.scale(GAME_OVER, (WINDOW_WIDTH,WINDOW_HEIGHT))
