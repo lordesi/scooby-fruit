@@ -1,18 +1,20 @@
 import pygame, sys
 from fruit import Fruit
 from bomb import Bomb
+from settings import spawn_bomba
+from settings import spawn_fruit
+from settings import move
+from settings import move_bomb
+from settings import numfrutti
 from settings import fruit_images
 from settings import bomb_images
 import settings
 import random
 import math
 
-
-
-
-
-
 pygame.init()
+pygame.font.init()
+font=pygame.font.Font(None,36)
 
 #definisco la schermata di avvio - demo
 
@@ -34,37 +36,6 @@ def schermata_caricamento():
         i+=1
         if i==settings.TOTAL_FRAMES:
             stato=False
-
-
-#definisco funzione spawn -demo
-
-def spawn_fruit():
-    fruit_name = random.choice(list(fruit_images.keys()))
-    fruit_image = fruit_images[fruit_name]
-    x = random.randint(0, settings.WINDOW_WIDTH - fruit_image.rect.width)
-    y = settings.WINDOW_HEIGHT - fruit_image.rect.height
-    speed_x = random.uniform(-1.5, 1.5)
-    speed_y = -random.uniform(2,3)
-    return [x, y, speed_x, speed_y, fruit_image]
-
-
-#definisco funzione movimento -demo
-
-def move(x, y, speed_x, speed_y, fruit_image, screen):
-    x += speed_x
-    y += speed_y
-    if y < settings.WINDOW_HEIGHT / 2:
-            speed_y += settings.GRAVITY
-    if x < -settings.RADIUS:
-            x = settings.WINDOW_WIDTH + settings.RADIUS
-            speed_x = random.uniform(-1.5, 1.5)
-            speed_y = -random.uniform(2,3)
-    elif x > settings.WINDOW_WIDTH + settings.RADIUS:
-            x = -settings.RADIUS
-            speed_x = random.uniform(-1.5, 1.5)
-            speed_y = -random.uniform(2,3)
-    fruit_image.blit_fruit(screen, x, y)
-    return x, y, speed_x, speed_y
 
 #funzione schermata iniziale
 
@@ -100,6 +71,11 @@ def schermata_menu():
                                     stats=False
                         screen.blit(settings.SCHERMATA_MENU, (0, 0))
                         screen.blit(pygame.transform.scale(settings.NERO_STATS, (500, 300)), (250, 150))
+                        tagliati=numfrutti()
+                        testo=font.render(tagliati,True,settings.BLU)
+                        testo_rect=testo.get_rect()
+                        testo_rect.center=(settings.WINDOW_WIDTH//2,settings.WINDOW_HEIGHT//2)
+                        screen.blit(testo,testo_rect)
                         screen.blit(pygame.transform.scale(settings.X_IMMAGINE, (20, 20)), (730, 150))
                         pos = pygame.mouse.get_pos()
                         screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
@@ -122,20 +98,54 @@ def schermata_menu():
 def schermata_gameplay():
     run = True
     fruits = []
+    bombe = []
     spawn_timer = 0
     spawn_delay = 60
+    spawn_timer_bomba=0
+    spawn_delay_bomba=240
+    frutti_tagliati=0
 
 
     while run:
         screen.blit(settings.SCHERMATA_GAMEPLAY, (0,0))
         pos = pygame.mouse.get_pos()
+        mouse_premuto=pygame.mouse.get_pressed()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+        
         spawn_timer += 1
         if spawn_timer >= spawn_delay:
             spawn_timer = 0
             fruits.append(spawn_fruit())
+        spawn_timer_bomba+=1
+        if spawn_timer_bomba>= spawn_delay_bomba:
+            spawn_timer_bomba=0
+            bombe.append(spawn_bomba())
+
+        if mouse_premuto[0]:
+            for fruit in fruits[:]:
+                if fruit[4].rect.collidepoint(pos):
+                    fruits.remove(fruit)
+                    frutti_tagliati+=1
+
+            for bomb in bombe[:]:
+                 if bomb[5].collidepoint(pos):
+                      bombe.remove(bomb)
+                      screen.blit(settings.GAME_OVER,(0,0))
+                      pygame.display.flip()
+                      with open ("progressi.txt","r",encoding="utf-8") as f:
+                          dati=f.read()
+                          dati=dati.split(":")
+                          dati[1]=int(dati[1])
+                          da_scrivere=frutti_tagliati+dati[1]
+                          with open("progressi.txt","w",encoding="utf-8") as nuovi_progressi:
+                              nuovi_progressi.write(f"Frutti tagliati:{da_scrivere}")
+                      pygame.time.delay(1400)
+                      run=False
+
+            
         
         for i in range(len(fruits)):
             fruit_data = fruits[i]
@@ -143,9 +153,13 @@ def schermata_gameplay():
             x, y, speed_x, speed_y = move(x, y, speed_x, speed_y, fruit_image, screen)
             fruits[i] = [x, y, speed_x, speed_y, fruit_image]
         
+        
+        for i in range (len(bombe)):
+            bomba_data=bombe[i]
+            x, y, speed_x, speed_y, bomba_image,rect = bomba_data
+            x, y, speed_x, speed_y,rect = move_bomb(x, y, speed_x, speed_y, bomba_image, screen,rect)
+            bombe[i] = [x, y, speed_x, speed_y, bomba_image,rect]
 
-        
-        
 
         screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
         
@@ -159,5 +173,4 @@ schermata_menu()
 
 
 pygame.quit()
-sys.exit()
- 
+sys.exit() 
