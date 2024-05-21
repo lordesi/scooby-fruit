@@ -1,1 +1,2 @@
-Frutti tagliati:12
+Frutti tagliati:30
+Record frutti tagliati in un match:19

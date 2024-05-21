@@ -44,7 +44,9 @@ def spawn_fruit():
     speed_x = random.uniform(-1.5, 1.5)
     speed_y = -random.uniform(2,3)
     fruit_image.rect.topleft=(x,y)
-    return [x, y, speed_x, speed_y, fruit_image]
+    angolo_rotazione=random.uniform(0,360)
+    return [x, y, speed_x, speed_y, fruit_image,angolo_rotazione]
+
 def spawn_bomba():
     bomba_image=bomb_images["bomb"]
     x=random.randint(0,WINDOW_WIDTH - bomba_image.rect.width)
@@ -52,9 +54,10 @@ def spawn_bomba():
     speed_x=random.uniform(-1.5,1.5)
     speed_y=random.uniform(2,3)
     bomba_rect=pygame.Rect(x,y,bomba_image.rect.width,bomba_image.rect.height)
-    return [x, y, speed_x, speed_y, bomba_image,bomba_rect]
+    angolo_rotazione=random.uniform(0,360)
+    return [x, y, speed_x, speed_y, bomba_image,bomba_rect,angolo_rotazione]
 
-def move(x, y, speed_x, speed_y, fruit_image, screen):
+def move(x, y, speed_x, speed_y, fruit_image, angolo_rotazione,screen):
     x += speed_x
     y += speed_y
     if y < WINDOW_HEIGHT / 2:
@@ -68,10 +71,13 @@ def move(x, y, speed_x, speed_y, fruit_image, screen):
             speed_x = random.uniform(-1.5, 1.5)
             speed_y = -random.uniform(2,3)
     fruit_image.rect.topleft=(x,y)
-    fruit_image.blit_fruit(screen, x, y)
-    return x, y, speed_x, speed_y
+    angolo_rotazione+=3
+    immagine_ruotata=pygame.transform.rotate(fruit_image.image,angolo_rotazione)
+    rect_ruotato=immagine_ruotata.get_rect(center=fruit_image.rect.center)
+    screen.blit(immagine_ruotata, rect_ruotato.topleft)
+    return x, y, speed_x, speed_y,angolo_rotazione
 
-def move_bomb(x, y, speed_x, speed_y, bomba_image, screen,rect):
+def move_bomb(x, y, speed_x, speed_y, bomba_image, screen,rect,angolo_rotazione):
     x += speed_x
     y += speed_y
     if y < WINDOW_HEIGHT / 2:
@@ -85,15 +91,20 @@ def move_bomb(x, y, speed_x, speed_y, bomba_image, screen,rect):
             speed_x = random.uniform(-1.5, 1.5)
             speed_y = -random.uniform(2,3)
     rect=pygame.Rect(x,y,bomba_image.rect.width,bomba_image.rect.height)
-    bomba_image.blit_bomb(screen, x, y)
-    return x, y, speed_x, speed_y, rect
+    angolo_rotazione+=3
+    immagine_ruotata=pygame.transform.rotate(bomba_image.image,angolo_rotazione)
+    rect_ruotato=immagine_ruotata.get_rect(center=rect.center)
+    screen.blit(immagine_ruotata, rect_ruotato.topleft)
+    return x, y, speed_x, speed_y, rect,angolo_rotazione
 
 #definisco funzione per ottenere frutti tagliati
-def numfrutti():
+def frutti():
       with open("progressi.txt","r",encoding="utf-8") as f:
             dati=f.read()
-            
-            return dati
+            dati=dati.split("\n")
+            tagliati=dati[0]
+            record=dati[1]
+            return [tagliati,record]
 
 #definisco lista barra di caricamento -demo
 
@@ -112,14 +123,7 @@ TOTAL_FRAMES = len(barra)
 #definisco pulsante -demo
 
 PLAY_BUTTON = pygame.image.load("play - button.png").convert_alpha()
-PLAY_BUTTON = pygame.transform.scale(PLAY_BUTTON,(110,110))
-
-
-#definisco rect button -demo
-
-PLAY_RECT = pygame.Rect(WINDOW_WIDTH/2 - 55, WINDOW_HEIGHT/2+100 - 25, 110, 110)
-PLAY_RECT_PRESSED = pygame.Rect(WINDOW_WIDTH/2 - 64, WINDOW_HEIGHT/2+91 - 25, 128, 128)
-
+PLAY_RECT=PLAY_BUTTON.get_rect(center=(WINDOW_WIDTH//2,WINDOW_HEIGHT//2+170))
 #definisco schermata gameplay -demo
 
 SCHERMATA_GAMEPLAY = pygame.image.load("schermata-gameplay.jpg")
@@ -143,9 +147,12 @@ TROFEO = pygame.image.load("trofeo.png")
 #TROFEO=pygame.transform.scale(TROFEO,(50,50))
 
 STATS_RECT=pygame.Rect(WINDOW_WIDTH-500,WINDOW_HEIGHT-450,500,300)
-NERO_STATS=pygame.image.load("nero.png")
-X_RECT=pygame.Rect(730,150,20,20)
+STATS_SFONDO=pygame.image.load("sfondo stats.png")
+X_RECT=pygame.Rect(715,148,40,40)
 X_IMMAGINE=pygame.image.load("x.png")
+
+QUIT_IMMAGINE=pygame.image.load("x.png")
+QUIT_RECT=pygame.Rect(907,505,50,50)
 
 #definisco velocità e misure frutta -demo
 
@@ -186,3 +193,4 @@ CUORE_RECT = CUORE.get_rect()
 #Game over
 GAME_OVER = pygame.image.load("game_over.jpg")
 GAME_OVER = pygame.transform.scale(GAME_OVER, (WINDOW_WIDTH,WINDOW_HEIGHT))
+
