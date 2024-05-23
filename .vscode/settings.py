@@ -109,9 +109,9 @@ def frutti():
 #definisco lista barra di caricamento -demo
 
 barra = []
-for percentuale in [25,50,75]:
+for percentuale in [25,50,75,100]:
     frame = pygame.image.load(f"barra-caricamento/{percentuale}.png")
-    frame = pygame.transform.scale(frame, (450, 150))
+    frame = pygame.transform.scale(frame, (600, 350))
     barra.append(frame)
 
 #definisco costanti barra -demo

@@ -30,7 +30,7 @@ def schermata_caricamento():
     i=0
     while stato:
         screen.blit(settings.SCHERMATA_CARICAMENTO,(0,0))
-        screen.blit(settings.barra[i],(250,400))
+        screen.blit(settings.barra[i],(175,350))
         pygame.display.flip()
         pygame.time.delay(1200)
         i+=1
