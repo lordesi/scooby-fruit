@@ -78,7 +78,6 @@ def schermata_menu():
 
                         screen.blit(settings.SCHERMATA_MENU, (0, 0))
                         screen.blit(pygame.transform.scale(settings.STATS_SFONDO, (700, 450)), (150, 75))
-                        pygame.draw.rect(screen,settings.BIANCO,settings.RESET_RECT)
                         statistiche=frutti()
                         scrivi_stats(statistiche)
 
