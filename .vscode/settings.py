@@ -128,7 +128,7 @@ def scrivi_stats(lista):
 barra = []
 for percentuale in [25,50,75,100]:
     frame = pygame.image.load(f"barra-caricamento/{percentuale}.png")
-    frame = pygame.transform.scale(frame, (600, 350))
+    frame = pygame.transform.scale(frame, (140 ,80))
     barra.append(frame)
 
 #definisco costanti barra -demo
