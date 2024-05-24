@@ -3,7 +3,7 @@ import random
 from fruit import Fruit
 from bomb import Bomb
 pygame.init()
-
+font=pygame.font.Font("PoetsenOne-Regular.ttf",36)
 #definisco parametri base - demo
 
 WINDOW_WIDTH = 1000
@@ -102,9 +102,26 @@ def frutti():
       with open("progressi.txt","r",encoding="utf-8") as f:
             dati=f.read()
             dati=dati.split("\n")
-            tagliati=dati[0]
-            record=dati[1]
-            return [tagliati,record]
+            dati=[el.split(":") for el in dati]
+            tagliati=dati[0][1]
+            record=dati[1][1]
+            bombe=dati[2][1]
+            return [tagliati,record,bombe]
+
+def scrivi_stats(lista):
+        
+        record=font.render(lista[1],True,BIANCO)
+        record_rect=record.get_rect()
+        record_rect.center=(605,175)
+        screen.blit(record,record_rect)
+        frutti=font.render(lista[0],True,BIANCO)
+        frutti_rect=frutti.get_rect()
+        frutti_rect.center=(WINDOW_WIDTH//2,330)
+        screen.blit(frutti,frutti_rect)
+        bombe=font.render(lista[2],True,BIANCO)
+        bombe_rect=bombe.get_rect()
+        bombe_rect.center=(WINDOW_WIDTH//2+210,330)
+        screen.blit(bombe,bombe_rect)
 
 #definisco lista barra di caricamento -demo
 
@@ -147,9 +164,11 @@ TROFEO = pygame.image.load("trofeo.png")
 #TROFEO=pygame.transform.scale(TROFEO,(50,50))
 
 STATS_RECT=pygame.Rect(WINDOW_WIDTH-500,WINDOW_HEIGHT-450,500,300)
-STATS_SFONDO=pygame.image.load("sfondo stats.png")
-X_RECT=pygame.Rect(715,148,40,40)
+STATS_SFONDO=pygame.image.load("sfondo_nuovo.png")
+X_RECT=pygame.Rect(150,75,74,68)
 X_IMMAGINE=pygame.image.load("x.png")
+RESET_RECT=pygame.Rect(507,423,195,45)
+
 
 QUIT_IMMAGINE=pygame.image.load("x.png")
 QUIT_RECT=pygame.Rect(907,505,50,50)

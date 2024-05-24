@@ -6,6 +6,7 @@ from settings import spawn_fruit
 from settings import move
 from settings import move_bomb
 from settings import frutti
+from settings import scrivi_stats
 from settings import fruit_images
 from settings import bomb_images
 import settings
@@ -14,7 +15,6 @@ import math
 
 pygame.init()
 pygame.font.init()
-font=pygame.font.Font(None,36)
 
 #definisco la schermata di avvio - demo
 
@@ -59,8 +59,7 @@ def schermata_menu():
                 if settings.QUIT_RECT.collidepoint(pos):
                     run=False
                 if settings.TROFEO_RECT.collidepoint(pos):
-                    screen.blit(pygame.transform.scale(settings.STATS_SFONDO, (500, 300)), (250,150))
-                    screen.blit(pygame.transform.scale(settings.X_IMMAGINE, (40, 40)), (715,148))
+                    screen.blit(pygame.transform.scale(settings.STATS_SFONDO, (700, 450)), (150,75))
                     screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
                     pygame.display.update()
                     stats=True
@@ -73,20 +72,16 @@ def schermata_menu():
                                 pos = pygame.mouse.get_pos()
                                 if settings.X_RECT.collidepoint(pos):
                                     stats=False
+                                if settings.RESET_RECT.collidepoint(pos):
+                                    with open("progressi.txt","w",encoding="utf-8") as f:
+                                        f.write(f"Frutti tagliati:0\nRecord frutti tagliati in un match:0\nBombe esplose:0")
+
                         screen.blit(settings.SCHERMATA_MENU, (0, 0))
-                        screen.blit(pygame.transform.scale(settings.STATS_SFONDO, (500, 300)), (250, 150))
-
+                        screen.blit(pygame.transform.scale(settings.STATS_SFONDO, (700, 450)), (150, 75))
+                        pygame.draw.rect(screen,settings.BIANCO,settings.RESET_RECT)
                         statistiche=frutti()
-                        testo=font.render(statistiche[0],True,settings.BLU)
-                        testo_rect=testo.get_rect()
-                        testo_rect.center=(settings.WINDOW_WIDTH//2,settings.WINDOW_HEIGHT//2+20)
-                        screen.blit(testo,testo_rect)
-                        testo2=font.render(statistiche[1],True,settings.BLU)
-                        testo_rect2=testo2.get_rect()
-                        testo_rect2.center=(settings.WINDOW_WIDTH//2,settings.WINDOW_HEIGHT//2-20)
-                        screen.blit(testo2,testo_rect2)
+                        scrivi_stats(statistiche)
 
-                        screen.blit(pygame.transform.scale(settings.X_IMMAGINE, (40, 40)), (715, 148))
                         pos = pygame.mouse.get_pos()
                         screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
                         pygame.display.update()          
@@ -161,12 +156,13 @@ def schermata_gameplay():
                           dati=dati.split("\n")
                           dati=[el.split(":") for el in dati]
                           record=int(dati[1][1])
+                          bomba=int(dati[2][1])+1
                           if frutti_tagliati>record:
                               record=frutti_tagliati
                           dati[0][1]=int(dati[0][1])
                           da_scrivere=frutti_tagliati+dati[0][1]
                           with open("progressi.txt","w",encoding="utf-8") as nuovi_progressi:
-                              nuovi_progressi.write(f"Frutti tagliati:{da_scrivere}\nRecord frutti tagliati in un match:{record}")
+                              nuovi_progressi.write(f"Frutti tagliati:{da_scrivere}\nRecord frutti tagliati in un match:{record}\nBombe esplose:{bomba}")
                       pygame.time.delay(1400)
                       run=False
 
