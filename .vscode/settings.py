@@ -123,8 +123,25 @@ def scrivi_stats(lista):
         bombe_rect.center=(WINDOW_WIDTH//2+210,330)
         screen.blit(bombe,bombe_rect)
 
-#definisco lista barra di caricamento -demo
+def aggiornare_progressi(file_path, frutti_tagliati):
+    with open(file_path, "r", encoding="utf-8") as f:
+        dati = f.read().split("\n")
+        dati=[el.split(":") for el in dati]
+    frutti_tagliati_totali = int(dati[0][1])
+    record = int(dati[1][1])
+    bomba = int(dati[2][1]) + 1
+    if frutti_tagliati > record:
+          record = frutti_tagliati
+    frutti_tagliati_totali += frutti_tagliati
+    with open(file_path, "w", encoding="utf-8") as nuovi_progressi:
+          nuovi_progressi.write(f"Frutti tagliati:{frutti_tagliati_totali}\nRecord frutti tagliati in un match:{record}\nBombe esplose:{bomba}")
 
+def reset_progressi(file_path):
+      with open(file_path, "w", encoding="utf-8") as f:
+            f.write(f"Frutti tagliati:0\nRecord frutti tagliati in un match:0\nBombe esplose:0")
+
+
+#definisco barra
 barra = []
 for percentuale in [25,50,75,100]:
     frame = pygame.image.load(f"barra-caricamento/{percentuale}.png")
@@ -205,9 +222,16 @@ bomb_images = {
 
 #definisco cuore -demo
 
-CUORE = pygame.image.load("Scooby Game Graphics/Fruits/cuore rosso.png")
-CUORE = pygame.transform.scale(CUORE, (CUORE.get_width()* 0.5, CUORE.get_height()*0.5))
-CUORE_RECT = CUORE.get_rect()
+CUORE_ROSSO = pygame.image.load("Scooby Game Graphics/Fruits/cuore rosso.png")
+CUORE_ROSSO = pygame.transform.scale(CUORE_ROSSO, (CUORE_ROSSO.get_width()* 0.1, CUORE_ROSSO.get_height()*0.1))
+CUOREROSSO_RECT = CUORE_ROSSO.get_rect()
+
+CUORE_GRIGIO = pygame.image.load("Scooby Game Graphics/Fruits/cuore grigio.png")
+CUOREGRIGIO_RECT = pygame.transform.scale(CUORE_GRIGIO, (CUORE_GRIGIO.get_width()* 0.1, CUORE_GRIGIO.get_height()*0.1))
+CUOREGRIGIO_RECT = CUORE_GRIGIO.get_rect()
+
+POSIZIONI_CUORE = [(900, 35), (830, 35), (760, 35)]
+
 
 #Game over
 GAME_OVER = pygame.image.load("game_over.jpg")

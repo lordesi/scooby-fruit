@@ -7,6 +7,8 @@ from settings import move
 from settings import move_bomb
 from settings import frutti
 from settings import scrivi_stats
+from settings import aggiornare_progressi
+from settings import reset_progressi
 from settings import fruit_images
 from settings import bomb_images
 import settings
@@ -73,8 +75,8 @@ def schermata_menu():
                                 if settings.X_RECT.collidepoint(pos):
                                     stats=False
                                 if settings.RESET_RECT.collidepoint(pos):
-                                    with open("progressi.txt","w",encoding="utf-8") as f:
-                                        f.write(f"Frutti tagliati:0\nRecord frutti tagliati in un match:0\nBombe esplose:0")
+                                    reset_progressi("progressi.txt")
+                                    
 
                         screen.blit(settings.SCHERMATA_MENU, (0, 0))
                         screen.blit(pygame.transform.scale(settings.STATS_SFONDO, (700, 450)), (150, 75))
@@ -119,6 +121,8 @@ def schermata_gameplay():
     spawn_timer_bomba=0
     spawn_delay_bomba=240
     frutti_tagliati=0
+    frutti_mancati=0
+    max_frutti_mancati = 3
 
 
     while run:
@@ -150,18 +154,7 @@ def schermata_gameplay():
                       bombe.remove(bomb)
                       screen.blit(settings.GAME_OVER,(0,0))
                       pygame.display.flip()
-                      with open ("progressi.txt","r",encoding="utf-8") as f:
-                          dati=f.read()
-                          dati=dati.split("\n")
-                          dati=[el.split(":") for el in dati]
-                          record=int(dati[1][1])
-                          bomba=int(dati[2][1])+1
-                          if frutti_tagliati>record:
-                              record=frutti_tagliati
-                          dati[0][1]=int(dati[0][1])
-                          da_scrivere=frutti_tagliati+dati[0][1]
-                          with open("progressi.txt","w",encoding="utf-8") as nuovi_progressi:
-                              nuovi_progressi.write(f"Frutti tagliati:{da_scrivere}\nRecord frutti tagliati in un match:{record}\nBombe esplose:{bomba}")
+                      aggiornare_progressi("progressi.txt", frutti_tagliati)
                       pygame.time.delay(1400)
                       run=False
 
@@ -171,7 +164,17 @@ def schermata_gameplay():
             fruit_data = fruits[i]
             x, y, speed_x, speed_y, fruit_image,angolo = fruit_data
             x, y, speed_x, speed_y,angolo = move(x, y, speed_x, speed_y, fruit_image, angolo,screen)
-            fruits[i] = [x, y, speed_x, speed_y, fruit_image,angolo]
+            if y > screen.get_height():
+                fruits.remove(fruit)
+                frutti_mancati += 1
+                if frutti_mancati >= max_frutti_mancati:
+                    screen.blit(settings.GAME_OVER,(0,0))
+                    pygame.display.flip()
+                    aggiornare_progressi("progressi.txt", frutti_tagliati)
+                    pygame.time.delay(1400)
+                    run=False
+            else:
+                fruits[i] = [x, y, speed_x, speed_y, fruit_image, angolo]
         
         
         for i in range (len(bombe)):
@@ -179,10 +182,15 @@ def schermata_gameplay():
             x, y, speed_x, speed_y, bomba_image,rect,angolo = bomba_data
             x, y, speed_x, speed_y,rect,angolo = move_bomb(x, y, speed_x, speed_y, bomba_image, screen,rect,angolo)
             bombe[i] = [x, y, speed_x, speed_y, bomba_image,rect,angolo]
-
+        
+        
+        for i in range(max_frutti_mancati):
+            if i < frutti_mancati:
+                screen.blit(settings.CUORE_GRIGIO, settings.POSIZIONI_CUORE[i])
+            else:
+                screen.blit(settings.CUORE_ROSSO, settings.POSIZIONI_CUORE[i])
 
         screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
-        
         pygame.display.update() 
         clock.tick(settings.FPS)
 
