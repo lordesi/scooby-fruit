@@ -133,6 +133,11 @@ def schermata_gameplay():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+            elif event.type==pygame.MOUSEBUTTONDOWN:
+                if settings.QUIT_RECT.collidepoint(pos):
+                        aggiornare_progressi("progressi.txt")
+                        run=False
+
         
         spawn_timer += 1
         if spawn_timer >= spawn_delay:
@@ -189,6 +194,12 @@ def schermata_gameplay():
                 screen.blit(settings.CUORE_GRIGIO, settings.POSIZIONI_CUORE[i])
             else:
                 screen.blit(settings.CUORE_ROSSO, settings.POSIZIONI_CUORE[i])
+        if settings.QUIT_RECT.collidepoint(pos):
+            screen.blit(pygame.transform.scale(settings.QUIT_IMMAGINE, (65, 65)), (35,35))
+        else:
+            screen.blit(pygame.transform.scale(settings.QUIT_IMMAGINE, (50, 50)), (41,35))
+
+
 
         screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
         pygame.display.update() 
