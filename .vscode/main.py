@@ -160,12 +160,12 @@ def schermata_gameplay():
 
             
         
-        for i in range(len(fruits)):
+        for i in range(len(fruits) -1, -1, -1):
             fruit_data = fruits[i]
             x, y, speed_x, speed_y, fruit_image,angolo = fruit_data
             x, y, speed_x, speed_y,angolo = move(x, y, speed_x, speed_y, fruit_image, angolo,screen)
             if y > screen.get_height():
-                fruits.remove(fruit)
+                fruits.pop(i)
                 frutti_mancati += 1
                 if frutti_mancati >= max_frutti_mancati:
                     screen.blit(settings.GAME_OVER,(0,0))

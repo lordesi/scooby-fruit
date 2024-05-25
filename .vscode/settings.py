@@ -227,7 +227,7 @@ CUORE_ROSSO = pygame.transform.scale(CUORE_ROSSO, (CUORE_ROSSO.get_width()* 0.1,
 CUOREROSSO_RECT = CUORE_ROSSO.get_rect()
 
 CUORE_GRIGIO = pygame.image.load("Scooby Game Graphics/Fruits/cuore grigio.png")
-CUOREGRIGIO_RECT = pygame.transform.scale(CUORE_GRIGIO, (CUORE_GRIGIO.get_width()* 0.1, CUORE_GRIGIO.get_height()*0.1))
+CUORE_GRIGIO = pygame.transform.scale(CUORE_GRIGIO, (CUORE_GRIGIO.get_width()* 0.1, CUORE_GRIGIO.get_height()*0.1))
 CUOREGRIGIO_RECT = CUORE_GRIGIO.get_rect()
 
 POSIZIONI_CUORE = [(900, 35), (830, 35), (760, 35)]
