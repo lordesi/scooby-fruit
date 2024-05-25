@@ -40,62 +40,33 @@ def spawn_fruit():
     fruit_name = random.choice(list(fruit_images.keys()))
     fruit_image = fruit_images[fruit_name]
     x = random.randint(0, WINDOW_WIDTH - fruit_image.rect.width)
-    y = WINDOW_HEIGHT 
-    speed_x = random.uniform(-1.5, 1.5)
-    speed_y = -random.uniform(2,3)
-    fruit_image.rect.topleft=(x,y)
-    angolo_rotazione=random.uniform(0,360)
-    return [x, y, speed_x, speed_y, fruit_image,angolo_rotazione]
+    y = WINDOW_HEIGHT
+    speed_x = random.randint(1, 2)
+    if x>=500:
+         speed_x*=-1
+    speed_y = random.randint(-10, -7)
+    fruit_image.rect.topleft = (x, y)
+    angolo_rotazione = random.randint(0, 360)
+    return [x, y, speed_x, speed_y, 8, pygame.time.get_ticks(), fruit_image, angolo_rotazione]  
 
 def spawn_bomba():
-    bomba_image=bomb_images["bomb"]
-    x=random.randint(0,WINDOW_WIDTH - bomba_image.rect.width)
-    y=WINDOW_HEIGHT
-    speed_x=random.uniform(-1.5,1.5)
-    speed_y=random.uniform(2,3)
-    bomba_rect=pygame.Rect(x,y,bomba_image.rect.width,bomba_image.rect.height)
-    angolo_rotazione=random.uniform(0,360)
-    return [x, y, speed_x, speed_y, bomba_image,bomba_rect,angolo_rotazione]
+    bomba_image = bomb_images["bomb"]
+    x = random.randint(0, WINDOW_WIDTH - bomba_image.rect.width)
+    y = WINDOW_HEIGHT
+    speed_x = random.randint(1, 2)
+    if x>=500:
+         speed_x*=-1
+    speed_y = random.randint(-10, -7)
+    bomba_rect = pygame.Rect(x, y, bomba_image.rect.width, bomba_image.rect.height)
+    angolo_rotazione = random.randint(0, 360)
+    return [x, y, speed_x, speed_y, 8, pygame.time.get_ticks(), bomba_image, bomba_rect, angolo_rotazione] 
 
-def move(x, y, speed_x, speed_y, fruit_image, angolo_rotazione,screen):
-    x += speed_x
-    y += speed_y
-    if y < WINDOW_HEIGHT / 2:
-            speed_y += GRAVITY
-    if x < -RADIUS:
-            x = WINDOW_WIDTH + RADIUS
-            speed_x = random.uniform(-1.5, 1.5)
-            speed_y = -random.uniform(2,3)
-    elif x > WINDOW_WIDTH + RADIUS:
-            x = -RADIUS
-            speed_x = random.uniform(-1.5, 1.5)
-            speed_y = -random.uniform(2,3)
-    fruit_image.rect.topleft=(x,y)
-    angolo_rotazione+=3
-    immagine_ruotata=pygame.transform.rotate(fruit_image.image,angolo_rotazione)
-    rect_ruotato=immagine_ruotata.get_rect(center=fruit_image.rect.center)
-    screen.blit(immagine_ruotata, rect_ruotato.topleft)
-    return x, y, speed_x, speed_y,angolo_rotazione
-
-def move_bomb(x, y, speed_x, speed_y, bomba_image, screen,rect,angolo_rotazione):
-    x += speed_x
-    y += speed_y
-    if y < WINDOW_HEIGHT / 2:
-            speed_y += GRAVITY
-    if x < -RADIUS:
-            x = WINDOW_WIDTH + RADIUS
-            speed_x = random.uniform(-1.5, 1.5)
-            speed_y = -random.uniform(2,3)
-    elif x > WINDOW_WIDTH + RADIUS:
-            x = -RADIUS
-            speed_x = random.uniform(-1.5, 1.5)
-            speed_y = -random.uniform(2,3)
-    rect=pygame.Rect(x,y,bomba_image.rect.width,bomba_image.rect.height)
-    angolo_rotazione+=3
-    immagine_ruotata=pygame.transform.rotate(bomba_image.image,angolo_rotazione)
-    rect_ruotato=immagine_ruotata.get_rect(center=rect.center)
-    screen.blit(immagine_ruotata, rect_ruotato.topleft)
-    return x, y, speed_x, speed_y, rect,angolo_rotazione
+def move(x0, y0, vel_x, vel_y, g, start):
+    tempo=pygame.time.get_ticks()
+    t =(tempo-start)/1000
+    x = x0 + vel_x * t
+    y = y0 + vel_y * t + 0.5 * g * t * t
+    return [x, y, vel_x, vel_y, g, start]
 
 #definisco funzione per ottenere frutti tagliati
 def frutti():

@@ -4,7 +4,6 @@ from bomb import Bomb
 from settings import spawn_bomba
 from settings import spawn_fruit
 from settings import move
-from settings import move_bomb
 from settings import frutti
 from settings import scrivi_stats
 from settings import aggiornare_progressi
@@ -150,12 +149,12 @@ def schermata_gameplay():
 
         if mouse_premuto[0]:
             for fruit in fruits[:]:
-                if fruit[4].rect.collidepoint(pos):
+                if fruit[6].rect.collidepoint(pos):
                     fruits.remove(fruit)
                     frutti_tagliati+=1
 
             for bomb in bombe[:]:
-                 if bomb[5].collidepoint(pos):
+                 if bomb[7].collidepoint(pos):
                       bombe.remove(bomb)
                       screen.blit(settings.GAME_OVER,(0,0))
                       pygame.display.flip()
@@ -167,8 +166,12 @@ def schermata_gameplay():
         
         for i in range(len(fruits) -1, -1, -1):
             fruit_data = fruits[i]
-            x, y, speed_x, speed_y, fruit_image,angolo = fruit_data
-            x, y, speed_x, speed_y,angolo = move(x, y, speed_x, speed_y, fruit_image, angolo,screen)
+            x, y, speed_x, speed_y,g,start, fruit_image,angolo = fruit_data
+            x, y, speed_x, speed_y,g ,start = move(x, y, speed_x, speed_y,g, start)
+            fruit_image.rect.topleft=(x,y)
+            angolo+=3
+            immagine_ruotata = pygame.transform.rotate(fruit_image.image, angolo)
+            rect_ruotato = immagine_ruotata.get_rect(center=fruit_image.rect.center)
             if y > screen.get_height():
                 fruits.pop(i)
                 frutti_mancati += 1
@@ -179,14 +182,20 @@ def schermata_gameplay():
                     pygame.time.delay(1400)
                     run=False
             else:
-                fruits[i] = [x, y, speed_x, speed_y, fruit_image, angolo]
+                screen.blit(immagine_ruotata,rect_ruotato.topleft)
+                fruits[i] = [x, y, speed_x, speed_y, g, start, fruit_image, angolo]
         
         
-        for i in range (len(bombe)):
-            bomba_data=bombe[i]
-            x, y, speed_x, speed_y, bomba_image,rect,angolo = bomba_data
-            x, y, speed_x, speed_y,rect,angolo = move_bomb(x, y, speed_x, speed_y, bomba_image, screen,rect,angolo)
-            bombe[i] = [x, y, speed_x, speed_y, bomba_image,rect,angolo]
+        for i in range(len(bombe)):
+            bomba_data = bombe[i]
+            x, y, speed_x, speed_y, g, start, bomba_image, rect, angolo = bomba_data
+            x, y, speed_x, speed_y, g, start = move(x, y, speed_x, speed_y, g, start)
+            rect.topleft=(x,y)
+            angolo += 3
+            immagine_ruotata = pygame.transform.rotate(bomba_image.image, angolo)
+            rect_ruotato = immagine_ruotata.get_rect(center=rect.center)
+            screen.blit(immagine_ruotata, rect_ruotato.topleft)
+            bombe[i] = [x, y, speed_x, speed_y, g, start, bomba_image, rect, angolo]
         
         
         for i in range(max_frutti_mancati):
