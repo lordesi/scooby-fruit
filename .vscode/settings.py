@@ -156,7 +156,7 @@ TOTAL_FRAMES = len(barra)
 
 #definisco pulsante -demo
 
-PLAY_BUTTON = pygame.image.load("play - button.png").convert_alpha()
+PLAY_BUTTON = pygame.image.load("Scooby Game Graphics/play - button.png").convert_alpha()
 PLAY_RECT=PLAY_BUTTON.get_rect(center=(WINDOW_WIDTH//2,WINDOW_HEIGHT//2+170))
 #definisco schermata gameplay -demo
 
@@ -165,29 +165,24 @@ SCHERMATA_GAMEPLAY = pygame.transform.scale(SCHERMATA_GAMEPLAY, (WINDOW_WIDTH, W
 
 #definisco katana -demo
 
-KATANA = pygame.image.load("katana.png").convert_alpha()
+KATANA = pygame.image.load("Scooby Game Graphics/katana.png").convert_alpha()
 KATANA = pygame.transform.scale(KATANA, (KATANA.get_width() * 0.2, KATANA.get_height() * 0.2))
 KATANA_RECT = KATANA.get_rect()
-
-#definisco scia taglio -demo
-
-SCIA = pygame.image.load("scia.png").convert_alpha()
-SCIA_RECT = SCIA.get_rect()
 
 #definisco trofeo
 #TROFEO_RECT=pygame.Rect(WINDOW_WIDTH-70, 70 , 50, 50)
 TROFEO_RECT=pygame.Rect(WINDOW_WIDTH-100, WINDOW_HEIGHT-565 , 65, 65)
-TROFEO = pygame.image.load("trofeo.png")
+TROFEO = pygame.image.load("Scooby Game Graphics/trofeo.png")
 #TROFEO=pygame.transform.scale(TROFEO,(50,50))
 
 STATS_RECT=pygame.Rect(WINDOW_WIDTH-500,WINDOW_HEIGHT-450,500,300)
-STATS_SFONDO=pygame.image.load("sfondo_nuovo.png")
+STATS_SFONDO=pygame.image.load("Scooby Game Graphics/sfondo_nuovo.png")
 X_RECT=pygame.Rect(150,75,74,68)
-X_IMMAGINE=pygame.image.load("x.png")
+X_IMMAGINE=pygame.image.load("Scooby Game Graphics/x.png")
 RESET_RECT=pygame.Rect(507,423,195,45)
 
 
-QUIT_IMMAGINE=pygame.image.load("x.png")
+QUIT_IMMAGINE=pygame.image.load("Scooby Game Graphics/x.png")
 QUIT_RECT=pygame.Rect(907,505,50,50)
 
 #definisco velocità e misure frutta -demo
@@ -234,6 +229,6 @@ POSIZIONI_CUORE = [(900, 35), (830, 35), (760, 35)]
 
 
 #Game over
-GAME_OVER = pygame.image.load("game_over.jpg")
+GAME_OVER = pygame.image.load("Scooby Game Graphics/game_over.jpg")
 GAME_OVER = pygame.transform.scale(GAME_OVER, (WINDOW_WIDTH,WINDOW_HEIGHT))
 
