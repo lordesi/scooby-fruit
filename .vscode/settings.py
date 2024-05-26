@@ -156,7 +156,11 @@ RESET_RECT=pygame.Rect(507,423,195,45)
 QUIT_IMMAGINE=pygame.image.load("Scooby Game Graphics/x.png")
 QUIT_RECT=pygame.Rect(907,505,50,50)
 QUIT_PARTITA_RECT=pygame.Rect(41,41,50,50)
+#definisco return home -demo
 
+RETURN_HOME = pygame.image.load("Scooby Game Graphics/return-home.png").convert_alpha()
+RETURN_HOME = pygame.transform.scale(RETURN_HOME, (RETURN_HOME.get_width()* 0.2, RETURN_HOME.get_height()*0.2))
+RETURN_HOME_RECT = RETURN_HOME.get_rect()
 #definisco velocità e misure frutta -demo
 
 RADIUS = 20

@@ -132,10 +132,6 @@ def schermata_gameplay():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-            elif event.type==pygame.MOUSEBUTTONDOWN:
-                if settings.QUIT_RECT.collidepoint(pos):
-                        aggiornare_progressi("progressi.txt")
-                        run=False
 
         
         spawn_timer += 1
@@ -154,9 +150,9 @@ def schermata_gameplay():
             #screen.blit(settings.SCIA,(pos_x-50,pos_y-50))
 
         if mouse_premuto[0]:
-            if settings.QUIT_PARTITA_RECT.collidepoint(pos):
-                run=False
-                
+            if settings.RETURN_HOME_RECT.collidepoint(pos):
+                aggiornare_progressi("progressi.txt", frutti_tagliati)
+                run = False
             for fruit in fruits[:]:
                 if fruit[6].rect.collidepoint(pos):
                     fruits.remove(fruit)
@@ -212,10 +208,10 @@ def schermata_gameplay():
                 screen.blit(settings.CUORE_GRIGIO, settings.POSIZIONI_CUORE[i])
             else:
                 screen.blit(settings.CUORE_ROSSO, settings.POSIZIONI_CUORE[i])
-        if settings.QUIT_PARTITA_RECT.collidepoint(pos):
-            screen.blit(pygame.transform.scale(settings.QUIT_IMMAGINE, (65, 65)), (27,27))
+        if settings.RETURN_HOME_RECT.collidepoint(pos):
+            screen.blit(pygame.transform.scale(settings.RETURN_HOME, (settings.RETURN_HOME.get_width()* 1.1, settings.RETURN_HOME.get_height()*1.1)), (23,23))
         else:
-            screen.blit(pygame.transform.scale(settings.QUIT_IMMAGINE, (50, 50)), (33,33))
+            screen.blit(settings.RETURN_HOME, (30,30))
 
 
 
