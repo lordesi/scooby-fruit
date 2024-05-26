@@ -216,4 +216,4 @@ GAME_OVER = pygame.transform.scale(GAME_OVER, (WINDOW_WIDTH,WINDOW_HEIGHT))
 
 #Prova scia cursore premuto
 SCIA=pygame.image.load("scia.png")
-SCIA=pygame.transform.scale(SCIA,(100,100))
+SCIA=pygame.transform.scale(SCIA,(50,50))
