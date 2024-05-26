@@ -155,6 +155,7 @@ RESET_RECT=pygame.Rect(507,423,195,45)
 
 QUIT_IMMAGINE=pygame.image.load("Scooby Game Graphics/x.png")
 QUIT_RECT=pygame.Rect(907,505,50,50)
+QUIT_PARTITA_RECT=pygame.Rect(41,41,50,50)
 
 #definisco velocità e misure frutta -demo
 
@@ -203,3 +204,6 @@ POSIZIONI_CUORE = [(900, 35), (830, 35), (760, 35)]
 GAME_OVER = pygame.image.load("Scooby Game Graphics/game_over.jpg")
 GAME_OVER = pygame.transform.scale(GAME_OVER, (WINDOW_WIDTH,WINDOW_HEIGHT))
 
+#Prova scia cursore premuto
+SCIA=pygame.image.load("scia.png")
+SCIA=pygame.transform.scale(SCIA,(100,100))

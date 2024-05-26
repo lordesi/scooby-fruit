@@ -38,7 +38,7 @@ def schermata_caricamento():
         if i==settings.TOTAL_FRAMES:
             stato=False
 
-#funzione schermata iniziale
+#funzione schermata iniziale XRNTBZP9
 
 def schermata_menu():
     run=True
@@ -146,8 +146,17 @@ def schermata_gameplay():
         if spawn_timer_bomba>= spawn_delay_bomba:
             spawn_timer_bomba=0
             bombe.append(spawn_bomba())
+        
+        #if mouse_premuto[0]:
+            #posizione=pygame.mouse.get_pos()
+            #pos_x=posizione[0]
+            #pos_y=posizione[1]
+            #screen.blit(settings.SCIA,(pos_x-50,pos_y-50))
 
         if mouse_premuto[0]:
+            if settings.QUIT_PARTITA_RECT.collidepoint(pos):
+                run=False
+                
             for fruit in fruits[:]:
                 if fruit[6].rect.collidepoint(pos):
                     fruits.remove(fruit)
@@ -203,10 +212,10 @@ def schermata_gameplay():
                 screen.blit(settings.CUORE_GRIGIO, settings.POSIZIONI_CUORE[i])
             else:
                 screen.blit(settings.CUORE_ROSSO, settings.POSIZIONI_CUORE[i])
-        if settings.QUIT_RECT.collidepoint(pos):
-            screen.blit(pygame.transform.scale(settings.QUIT_IMMAGINE, (65, 65)), (35,35))
+        if settings.QUIT_PARTITA_RECT.collidepoint(pos):
+            screen.blit(pygame.transform.scale(settings.QUIT_IMMAGINE, (65, 65)), (27,27))
         else:
-            screen.blit(pygame.transform.scale(settings.QUIT_IMMAGINE, (50, 50)), (41,35))
+            screen.blit(pygame.transform.scale(settings.QUIT_IMMAGINE, (50, 50)), (33,33))
 
 
 
