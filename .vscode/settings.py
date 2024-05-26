@@ -157,6 +157,9 @@ QUIT_IMMAGINE=pygame.image.load("Scooby Game Graphics/x.png")
 QUIT_RECT=pygame.Rect(907,505,50,50)
 QUIT_PARTITA_RECT=pygame.Rect(41,41,50,50)
 
+X_FRUTTO_MANCATO=pygame.image.load("x_frutto_mancato.png")
+X_FRUTTO_MANCATO=pygame.transform.scale(X_FRUTTO_MANCATO,(70,70))
+
 #definisco velocità e misure frutta -demo
 
 RADIUS = 20

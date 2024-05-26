@@ -115,6 +115,7 @@ def schermata_gameplay():
     run = True
     fruits = []
     bombe = []
+    frutti_mancati_lista=[]
     spawn_timer = 0
     spawn_delay = 60
     spawn_timer_bomba=0
@@ -146,6 +147,8 @@ def schermata_gameplay():
         if spawn_timer_bomba>= spawn_delay_bomba:
             spawn_timer_bomba=0
             bombe.append(spawn_bomba())
+        tempo_corrente=pygame.time.get_ticks()
+        frutti_mancati_lista=[x for x in frutti_mancati_lista if tempo_corrente-x[1]<2000]
         
         #if mouse_premuto[0]:
             #posizione=pygame.mouse.get_pos()
@@ -156,7 +159,7 @@ def schermata_gameplay():
         if mouse_premuto[0]:
             if settings.QUIT_PARTITA_RECT.collidepoint(pos):
                 run=False
-                
+
             for fruit in fruits[:]:
                 if fruit[6].rect.collidepoint(pos):
                     fruits.remove(fruit)
@@ -182,7 +185,10 @@ def schermata_gameplay():
             immagine_ruotata = pygame.transform.rotate(fruit_image.image, angolo)
             rect_ruotato = immagine_ruotata.get_rect(center=fruit_image.rect.center)
             if y > screen.get_height():
+                pos_frutto=fruit_image.rect.topleft
                 fruits.pop(i)
+                frutti_mancati_lista.append((pos_frutto,pygame.time.get_ticks()))
+                screen.blit(settings.X_FRUTTO_MANCATO,(pos_frutto[0]-35,settings.WINDOW_HEIGHT-100))
                 frutti_mancati += 1
                 if frutti_mancati >= max_frutti_mancati:
                     screen.blit(settings.GAME_OVER,(0,0))
@@ -206,6 +212,8 @@ def schermata_gameplay():
             screen.blit(immagine_ruotata, rect_ruotato.topleft)
             bombe[i] = [x, y, speed_x, speed_y, g, start, bomba_image, rect, angolo]
         
+        for posizione,tempo in frutti_mancati_lista:
+            screen.blit(settings.X_FRUTTO_MANCATO,(posizione[0]-35,settings.WINDOW_HEIGHT-60))
         
         for i in range(max_frutti_mancati):
             if i < frutti_mancati:
