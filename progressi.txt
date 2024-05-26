@@ -1,9 +1,3 @@
-<<<<<<< HEAD
 Frutti tagliati:0
 Record frutti tagliati in un match:0
 Bombe esplose:10
-=======
-Frutti tagliati:69
-Record frutti tagliati in un match:18
-Bombe esplose:9
->>>>>>> d310412b620ce38d0086cf76cd4de8726116cffe
