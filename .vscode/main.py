@@ -9,6 +9,7 @@ from settings import scrivi_stats
 from settings import scrivi_round
 from settings import aggiornare_progressi
 from settings import reset_progressi
+from settings import scrivi_punteggio
 from settings import fruit_images
 from settings import bomb_images
 import settings
@@ -139,6 +140,8 @@ def schermata_gameplay():
         pos = pygame.mouse.get_pos()
         mouse_premuto=pygame.mouse.get_pressed()
 
+        scrivi_punteggio(frutti_tagliati)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -239,14 +242,12 @@ def schermata_gameplay():
             screen.blit(pygame.transform.scale(settings.RETURN_HOME, (settings.RETURN_HOME.get_width()* 1.1, settings.RETURN_HOME.get_height()*1.1)), (23,23))
         else:
             screen.blit(settings.RETURN_HOME, (30,30))
+        
 
-        punteggio=font.render(f"{frutti_tagliati}",True,settings.BIANCO)
-        punteggio_rect=punteggio.get_rect()
-        punteggio_rect.center=(500,50)
-        screen.blit(punteggio,punteggio_rect)
         screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
         pygame.display.update() 
         clock.tick(settings.FPS)
+
 
 schermata_caricamento()
 pygame.mouse.set_visible(False)

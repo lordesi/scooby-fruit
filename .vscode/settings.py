@@ -4,7 +4,8 @@ from fruit import Fruit
 from bomb import Bomb
 pygame.init()
 font=pygame.font.Font("PoetsenOne-Regular.ttf",36)
-font2= pygame.font.Font("Creepster-Regular.ttf", 100)
+font2= pygame.font.Font("Creepster-Regular.ttf", 36)
+font3= pygame.font.Font("Creepster-Regular.ttf", 100)
 #definisco parametri base - demo
 
 WINDOW_WIDTH = 1000
@@ -102,6 +103,12 @@ def scrivi_round(numero, display):
      record_rect.center = (500, 250)
      display.blit(record,record_rect)
 
+def scrivi_punteggio(numero):
+        punteggio=font2.render(f"{numero}",True, BIANCO)
+        punteggio_rect=punteggio.get_rect()
+        punteggio_rect.center=(500,50)
+        screen.blit(punteggio,punteggio_rect)
+        
 def aggiornare_progressi(file_path, frutti_tagliati):
     with open(file_path, "r", encoding="utf-8") as f:
         dati = f.read().split("\n")
