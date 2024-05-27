@@ -126,7 +126,7 @@ def schermata_gameplay():
     frutti_mancati=0
     max_frutti_mancati = 3
     lista_tempi = [30, 60, 90, 120]
-    round = [5]
+    frutti
     round_number = 1
 
 
@@ -144,7 +144,7 @@ def schermata_gameplay():
 
         if lista_tempi and current_time_s >= lista_tempi[0]:
             lista_tempi.pop(0)
-            spawn_delay -= 5
+            spawn_delay -= 7
 
         
         spawn_timer += 1

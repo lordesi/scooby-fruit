@@ -1,3 +1,3 @@
-Frutti tagliati:91
-Record frutti tagliati in un match:38
-Bombe esplose:17
+Frutti tagliati:131
+Record frutti tagliati in un match:40
+Bombe esplose:18
