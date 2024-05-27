@@ -216,7 +216,8 @@ CUORE_GRIGIO = pygame.transform.scale(CUORE_GRIGIO, (CUORE_GRIGIO.get_width()* 0
 CUOREGRIGIO_RECT = CUORE_GRIGIO.get_rect()
 
 POSIZIONI_CUORE = [(900, 35), (830, 35), (760, 35)]
-
+SCORE=pygame.image.load("Scooby Game Graphics/Fruits/Pineapple.png")
+SCORE=pygame.transform.scale(SCORE,(50,50))
 
 #Game over
 GAME_OVER = pygame.image.load("Scooby Game Graphics/game_over.jpg")
