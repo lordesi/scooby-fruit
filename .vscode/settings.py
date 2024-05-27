@@ -155,6 +155,10 @@ KATANA = pygame.image.load("Scooby Game Graphics/katana.png").convert_alpha()
 KATANA = pygame.transform.scale(KATANA, (KATANA.get_width() * 0.2, KATANA.get_height() * 0.2))
 KATANA_RECT = KATANA.get_rect()
 
+KATANA_PRESSED = pygame.image.load("Scooby Game Graphics/katana-pressed.png")
+KATANA_PRESSED = pygame.transform.scale(KATANA_PRESSED, (KATANA_PRESSED.get_width() * 0.2, KATANA_PRESSED.get_height() * 0.2))
+KATANA_PRESSED_RECT = KATANA_PRESSED.get_rect()
+
 #definisco trofeo
 #TROFEO_RECT=pygame.Rect(WINDOW_WIDTH-70, 70 , 50, 50)
 TROFEO_RECT=pygame.Rect(WINDOW_WIDTH-100, WINDOW_HEIGHT-565 , 65, 65)

@@ -49,6 +49,7 @@ def schermata_menu():
 
     while run:
         screen.blit(settings.SCHERMATA_MENU,(0,0))
+        mouse_pressed1 = pygame.mouse.get_pressed()
         
 
         pos = pygame.mouse.get_pos()
@@ -86,7 +87,10 @@ def schermata_menu():
                         scrivi_stats(statistiche)
 
                         pos = pygame.mouse.get_pos()
-                        screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
+                        if mouse_pressed1[0]:
+                            screen.blit(settings.KATANA_PRESSED, (pos[0] - settings.KATANA_PRESSED.get_width() / 2, pos[1] - settings.KATANA_PRESSED.get_height() / 2))
+                        else:
+                            screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
                         pygame.display.update()          
         angolo+=1
 
@@ -128,11 +132,7 @@ def schermata_gameplay():
     frutti_mancati=0
     max_frutti_mancati = 3
     lista_tempi = [30, 60, 90, 120]
-    round_number = 1
-    frutti_x_round = 0
-    round_text_pause = False
-    round_inizio_time = 0
-    round_display_time = 3000
+ 
 
 
     while run:
@@ -153,43 +153,19 @@ def schermata_gameplay():
             lista_tempi.pop(0)
             spawn_delay -= 7
         
-        if frutti_x_round == 0:
-            scrivi_round(round_number, screen)
-            pygame.display.flip()
-            round_number += 1
-            frutti_x_round = 30 * round_number
         
-        if frutti_x_round > 0:
-            spawn_timer += 1
-            frutti_x_round -= 1
-            if spawn_timer >= spawn_delay:
-                spawn_timer = 0
-                fruits.append(spawn_fruit())
-            spawn_timer_bomba+=1
-            if spawn_timer_bomba>= spawn_delay_bomba:
-                spawn_timer_bomba=0
-                bombe.append(spawn_bomba())
+        
+        spawn_timer += 1
+        if spawn_timer >= spawn_delay:
+            spawn_timer = 0
+            fruits.append(spawn_fruit())
+        spawn_timer_bomba+=1
+        if spawn_timer_bomba>= spawn_delay_bomba:
+            spawn_timer_bomba=0
+            bombe.append(spawn_bomba())
         
         tempo_corrente=pygame.time.get_ticks()
         frutti_mancati_lista=[x for x in frutti_mancati_lista if tempo_corrente-x[1]<2000]
-
-        if mouse_premuto[0]:
-            if settings.QUIT_PARTITA_RECT.collidepoint(pos):
-                run=False
-              
-            for fruit in fruits[:]:
-                if fruit[6].rect.collidepoint(pos):
-                    fruits.remove(fruit)
-                    frutti_tagliati+=1
-
-            for bomb in bombe[:]:
-                 if bomb[7].collidepoint(pos):
-                      bombe.remove(bomb)
-                      screen.blit(settings.GAME_OVER,(0,0))
-                      pygame.display.flip()
-                      #aggiornare_progressi("progressi.txt", frutti_tagliati)
-                      pygame.time.delay(1400)
-                      run=False
 
             
         if fruits:
@@ -242,9 +218,28 @@ def schermata_gameplay():
             screen.blit(pygame.transform.scale(settings.RETURN_HOME, (settings.RETURN_HOME.get_width()* 1.1, settings.RETURN_HOME.get_height()*1.1)), (23,23))
         else:
             screen.blit(settings.RETURN_HOME, (30,30))
-        
 
-        screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
+        if mouse_premuto[0]:
+            screen.blit(settings.KATANA_PRESSED, (pos[0] - settings.KATANA_PRESSED.get_width() / 2, pos[1] - settings.KATANA_PRESSED.get_height() / 2))
+            if settings.QUIT_PARTITA_RECT.collidepoint(pos):
+                run=False
+            
+            for fruit in fruits[:]:
+                if fruit[6].rect.collidepoint(pos):
+                    fruits.remove(fruit)
+                    frutti_tagliati+=1
+
+            for bomb in bombe[:]:
+                 if bomb[7].collidepoint(pos):
+                      bombe.remove(bomb)
+                      screen.blit(settings.GAME_OVER,(0,0))
+                      pygame.display.flip()
+                      #aggiornare_progressi("progressi.txt", frutti_tagliati)
+                      pygame.time.delay(1400)
+                      run=False
+        else:
+            screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
+        
         pygame.display.update() 
         clock.tick(settings.FPS)
 
