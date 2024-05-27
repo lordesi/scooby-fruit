@@ -4,6 +4,7 @@ from fruit import Fruit
 from bomb import Bomb
 pygame.init()
 font=pygame.font.Font("PoetsenOne-Regular.ttf",36)
+font2= pygame.font.Font("Creepster-Regular.ttf", 100)
 #definisco parametri base - demo
 
 WINDOW_WIDTH = 1000
@@ -25,6 +26,7 @@ NERO = (0,0,0)
 ROSSO = (255,0,0)
 BLU = (0,0,255)
 VERDE = (0,255,0)
+VERDE_SCOOBY = (129,217,88,255)
 
 # definisco bg delle schermate -demo
 
@@ -93,6 +95,12 @@ def scrivi_stats(lista):
         bombe_rect=bombe.get_rect()
         bombe_rect.center=(WINDOW_WIDTH//2+210,330)
         screen.blit(bombe,bombe_rect)
+
+def scrivi_round(numero):
+     record= font2.render(f"{numero} round", True, VERDE_SCOOBY)
+     record_rect=record.get_rect()
+     record_rect.center = (500, 250)
+     screen.blit(record,record_rect)
 
 def aggiornare_progressi(file_path, frutti_tagliati):
     with open(file_path, "r", encoding="utf-8") as f:
@@ -199,12 +207,12 @@ bomb_images = {
 
 #definisco cuore -demo
 
-CUORE_ROSSO = pygame.image.load("Scooby Game Graphics/Fruits/cuore rosso.png")
-CUORE_ROSSO = pygame.transform.scale(CUORE_ROSSO, (CUORE_ROSSO.get_width()* 0.1, CUORE_ROSSO.get_height()*0.1))
+CUORE_ROSSO = pygame.image.load("Scooby Game Graphics/cuore-rosso.png")
+CUORE_ROSSO = pygame.transform.scale(CUORE_ROSSO, (CUORE_ROSSO.get_width()* 0.15, CUORE_ROSSO.get_height()*0.15))
 CUOREROSSO_RECT = CUORE_ROSSO.get_rect()
 
-CUORE_GRIGIO = pygame.image.load("Scooby Game Graphics/Fruits/cuore grigio.png")
-CUORE_GRIGIO = pygame.transform.scale(CUORE_GRIGIO, (CUORE_GRIGIO.get_width()* 0.1, CUORE_GRIGIO.get_height()*0.1))
+CUORE_GRIGIO = pygame.image.load("Scooby Game Graphics/cuore-grigio.png")
+CUORE_GRIGIO = pygame.transform.scale(CUORE_GRIGIO, (CUORE_GRIGIO.get_width()* 0.15, CUORE_GRIGIO.get_height()*0.15))
 CUOREGRIGIO_RECT = CUORE_GRIGIO.get_rect()
 
 POSIZIONI_CUORE = [(900, 35), (830, 35), (760, 35)]
@@ -214,6 +222,3 @@ POSIZIONI_CUORE = [(900, 35), (830, 35), (760, 35)]
 GAME_OVER = pygame.image.load("Scooby Game Graphics/game_over.jpg")
 GAME_OVER = pygame.transform.scale(GAME_OVER, (WINDOW_WIDTH,WINDOW_HEIGHT))
 
-#Prova scia cursore premuto
-SCIA=pygame.image.load("scia.png")
-SCIA=pygame.transform.scale(SCIA,(50,50))

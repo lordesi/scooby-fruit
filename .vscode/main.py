@@ -6,6 +6,7 @@ from settings import spawn_fruit
 from settings import move
 from settings import frutti
 from settings import scrivi_stats
+from settings import scrivi_round
 from settings import aggiornare_progressi
 from settings import reset_progressi
 from settings import fruit_images
@@ -124,6 +125,9 @@ def schermata_gameplay():
     frutti_tagliati=0
     frutti_mancati=0
     max_frutti_mancati = 3
+    lista_tempi = [30, 60, 90, 120]
+    round = [5]
+    round_number = 1
 
 
     while run:
@@ -134,6 +138,13 @@ def schermata_gameplay():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+
+        current_time_ms = pygame.time.get_ticks()
+        current_time_s = current_time_ms // 1000
+
+        if lista_tempi and current_time_s >= lista_tempi[0]:
+            lista_tempi.pop(0)
+            spawn_delay -= 5
 
         
         spawn_timer += 1
@@ -147,14 +158,6 @@ def schermata_gameplay():
         
         tempo_corrente=pygame.time.get_ticks()
         frutti_mancati_lista=[x for x in frutti_mancati_lista if tempo_corrente-x[1]<2000]
-        tempo_corrente=pygame.time.get_ticks()
-        scia=[x for x in scia if tempo_corrente-x[1]<1500]
-        
-        #if mouse_premuto[0]:
-            #posizione=pygame.mouse.get_pos()
-            #pos_x=posizione[0]
-            #pos_y=posizione[1]
-            #screen.blit(settings.SCIA,(pos_x-50,pos_y-50))
 
         if mouse_premuto[0]:
             if settings.QUIT_PARTITA_RECT.collidepoint(pos):
@@ -215,8 +218,6 @@ def schermata_gameplay():
 
         for posizione,tempo in frutti_mancati_lista:
             screen.blit(settings.X_FRUTTO_MANCATO,(posizione[0]-35,settings.WINDOW_HEIGHT-60))
-        for posizione,tempo in scia:
-            screen.blit(settings.SCIA,(posizione[0]-50,posizione[1]-50))
         
         for i in range(max_frutti_mancati):
             if i < frutti_mancati:
