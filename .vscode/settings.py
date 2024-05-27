@@ -96,11 +96,11 @@ def scrivi_stats(lista):
         bombe_rect.center=(WINDOW_WIDTH//2+210,330)
         screen.blit(bombe,bombe_rect)
 
-def scrivi_round(numero):
+def scrivi_round(numero, display):
      record= font2.render(f"{numero} round", True, VERDE_SCOOBY)
      record_rect=record.get_rect()
      record_rect.center = (500, 250)
-     screen.blit(record,record_rect)
+     display.blit(record,record_rect)
 
 def aggiornare_progressi(file_path, frutti_tagliati):
     with open(file_path, "r", encoding="utf-8") as f:
