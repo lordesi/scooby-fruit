@@ -126,8 +126,8 @@ def schermata_gameplay():
     frutti_mancati=0
     max_frutti_mancati = 3
     lista_tempi = [30, 60, 90, 120]
-    frutti
     round_number = 1
+    frutti_x_round = 30
 
 
     while run:
@@ -146,7 +146,12 @@ def schermata_gameplay():
             lista_tempi.pop(0)
             spawn_delay -= 7
 
-        
+        if frutti_x_round != 0:
+            scrivi_round(f"round {round_number}")
+            pygame.time.delay(1000)
+            round_number += 1
+            frutti_x_round = 30 * round_number
+
         spawn_timer += 1
         if spawn_timer >= spawn_delay:
             spawn_timer = 0
@@ -196,7 +201,7 @@ def schermata_gameplay():
                 if frutti_mancati >= max_frutti_mancati:
                     screen.blit(settings.GAME_OVER,(0,0))
                     pygame.display.flip()
-                    aggiornare_progressi("progressi.txt", frutti_tagliati)
+                    #aggiornare_progressi("progressi.txt", frutti_tagliati)
                     pygame.time.delay(1400)
                     run=False
             else:
