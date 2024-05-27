@@ -127,7 +127,7 @@ def schermata_gameplay():
     max_frutti_mancati = 3
     lista_tempi = [30, 60, 90, 120]
     round_number = 1
-    frutti_x_round = 30
+    frutti_x_round = 0
 
 
     while run:
@@ -146,9 +146,8 @@ def schermata_gameplay():
             lista_tempi.pop(0)
             spawn_delay -= 7
 
-        if frutti_x_round != 0:
-            scrivi_round(f"round {round_number}")
-            pygame.time.delay(1000)
+        if frutti_x_round == 0:
+            scrivi_round(round_number)
             round_number += 1
             frutti_x_round = 30 * round_number
 
@@ -167,7 +166,7 @@ def schermata_gameplay():
         if mouse_premuto[0]:
             if settings.QUIT_PARTITA_RECT.collidepoint(pos):
                 run=False
-                
+              
             for fruit in fruits[:]:
                 if fruit[6].rect.collidepoint(pos):
                     fruits.remove(fruit)
