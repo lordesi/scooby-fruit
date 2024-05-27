@@ -18,7 +18,7 @@ import time
 
 pygame.init()
 pygame.font.init()
-
+font=pygame.font.Font("PoetsenOne-Regular.ttf",36)
 #definisco la schermata di avvio - demo
 
 screen = pygame.display.set_mode((settings.WINDOW_WIDTH, settings.WINDOW_HEIGHT))
@@ -240,7 +240,10 @@ def schermata_gameplay():
         else:
             screen.blit(settings.RETURN_HOME, (30,30))
 
-
+        punteggio=font.render(f"{frutti_tagliati}",True,settings.BIANCO)
+        punteggio_rect=punteggio.get_rect()
+        punteggio_rect.center=(500,50)
+        screen.blit(punteggio,punteggio_rect)
         screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
         pygame.display.update() 
         clock.tick(settings.FPS)
