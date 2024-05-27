@@ -147,7 +147,9 @@ def schermata_gameplay():
             spawn_delay -= 7
 
         if frutti_x_round == 0:
+            pygame.time.delay(2000)
             scrivi_round(round_number)
+            pygame.display.update()
             round_number += 1
             frutti_x_round = 30 * round_number
 
