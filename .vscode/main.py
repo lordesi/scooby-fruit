@@ -129,6 +129,9 @@ def schermata_gameplay():
     lista_tempi = [30, 60, 90, 120]
     round_number = 1
     frutti_x_round = 0
+    round_text_pause = False
+    round_inizio_time = 0
+    round_display_time = 3000
 
 
     while run:
@@ -149,8 +152,7 @@ def schermata_gameplay():
         
         if frutti_x_round == 0:
             scrivi_round(round_number, screen)
-            pygame.display.update()
-            pygame.time.delay(2000)
+            pygame.display.flip()
             round_number += 1
             frutti_x_round = 30 * round_number
         
