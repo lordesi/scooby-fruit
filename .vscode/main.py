@@ -123,7 +123,6 @@ def schermata_gameplay():
     fruits = []
     bombe = []
     frutti_mancati_lista = []
-    scia = []
     spawn_timer = 0
     spawn_delay = 60
     spawn_timer_bomba=0
@@ -131,8 +130,7 @@ def schermata_gameplay():
     frutti_tagliati=0
     frutti_mancati=0
     max_frutti_mancati = 3
-    lista_tempi = [30, 60, 90, 120]
- 
+    
 
 
     while run:
@@ -146,23 +144,17 @@ def schermata_gameplay():
             if event.type == pygame.QUIT:
                 run = False
 
-        current_time_ms = pygame.time.get_ticks()
-        current_time_s = current_time_ms // 1000
-
-        if lista_tempi and current_time_s >= lista_tempi[0]:
-            lista_tempi.pop(0)
-            spawn_delay -= 7
-        
-        
-        
-        spawn_timer += 1
         if spawn_timer >= spawn_delay:
             spawn_timer = 0
             fruits.append(spawn_fruit())
-        spawn_timer_bomba+=1
+        else:
+            spawn_timer+=1
+        
         if spawn_timer_bomba>= spawn_delay_bomba:
             spawn_timer_bomba=0
             bombe.append(spawn_bomba())
+        else:
+            spawn_timer_bomba+=1
         
         tempo_corrente=pygame.time.get_ticks()
         frutti_mancati_lista=[x for x in frutti_mancati_lista if tempo_corrente-x[1]<2000]
