@@ -14,6 +14,7 @@ from settings import bomb_images
 import settings
 import random
 import math
+import time
 
 pygame.init()
 pygame.font.init()
@@ -145,11 +146,11 @@ def schermata_gameplay():
         if lista_tempi and current_time_s >= lista_tempi[0]:
             lista_tempi.pop(0)
             spawn_delay -= 7
-
         if frutti_x_round == 0:
-            pygame.time.delay(2000)
-            scrivi_round(round_number)
-            pygame.display.update()
+            for i in range(10):
+                scrivi_round(round_number)
+                time.sleep(1)
+            pygame.display.flip()
             round_number += 1
             frutti_x_round = 30 * round_number
 
@@ -234,7 +235,6 @@ def schermata_gameplay():
             screen.blit(pygame.transform.scale(settings.RETURN_HOME, (settings.RETURN_HOME.get_width()* 1.1, settings.RETURN_HOME.get_height()*1.1)), (23,23))
         else:
             screen.blit(settings.RETURN_HOME, (30,30))
-
 
 
         screen.blit(settings.KATANA, (pos[0] - settings.KATANA.get_width() / 2, pos[1] - settings.KATANA.get_height() / 2))
