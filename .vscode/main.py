@@ -146,11 +146,11 @@ def schermata_gameplay():
         tempo_corrente=pygame.time.get_ticks()
         frutti_mancati_lista=[x for x in frutti_mancati_lista if tempo_corrente-x[1]<2000]
         
-        #if mouse_premuto[0]:
-            #posizione=pygame.mouse.get_pos()
-            #pos_x=posizione[0]
-            #pos_y=posizione[1]
-            #screen.blit(settings.SCIA,(pos_x-50,pos_y-50))
+        if mouse_premuto[0]:
+            posizione=pygame.mouse.get_pos()
+            pos_x=posizione[0]
+            pos_y=posizione[1]
+            screen.blit(settings.SCIA,(pos_x-50,pos_y-50))
 
         if mouse_premuto[0]:
             if settings.QUIT_PARTITA_RECT.collidepoint(pos):
@@ -166,7 +166,7 @@ def schermata_gameplay():
                       bombe.remove(bomb)
                       screen.blit(settings.GAME_OVER,(0,0))
                       pygame.display.flip()
-                      aggiornare_progressi("progressi.txt", frutti_tagliati)
+                      #aggiornare_progressi("progressi.txt", frutti_tagliati)
                       pygame.time.delay(1400)
                       run=False
 
