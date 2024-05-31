@@ -158,6 +158,12 @@ def schermata_gameplay(round,spawn_delay,frutti_mancati,spawn_delay_bomba,frutti
 
     screen.blit(settings.SCHERMATA_GAMEPLAY,(0,0))
     screen.blit(settings.rounds[round],(200,170))
+    for i in range(max_frutti_mancati):
+        if i < frutti_mancati:
+            screen.blit(settings.CUORE_GRIGIO, settings.POSIZIONI_CUORE[i])
+        else:
+            screen.blit(settings.CUORE_ROSSO, settings.POSIZIONI_CUORE[i])
+    scrivi_punteggio(frutti_tagliati)
     pygame.display.update()
     pygame.time.delay(1500)
     start_funzione=pygame.time.get_ticks()
